@@ -1,0 +1,881 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>تحليل نتائج الترم الثاني 2024-2025 | مدرسة علوم جازان العالمية - بنات</title>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js"></script>
+<style>
+  :root {
+    --primary: #1a3a6b;
+    --primary-light: #2563eb;
+    --secondary: #0ea5e9;
+    --accent: #f59e0b;
+    --success: #22c55e;
+    --warning: #f59e0b;
+    --danger: #ef4444;
+    --bg: #0f172a;
+    --bg2: #1e293b;
+    --bg3: #334155;
+    --card: #1e293b;
+    --card2: #263044;
+    --text: #f1f5f9;
+    --text2: #94a3b8;
+    --border: #334155;
+    --aplus: #10b981;
+    --a: #22c55e;
+    --bplus: #84cc16;
+    --b: #eab308;
+    --cplus: #f97316;
+    --c: #ef4444;
+    --d: #dc2626;
+    --radius: 16px;
+    --shadow: 0 8px 32px rgba(0,0,0,0.4);
+  }
+  * { margin:0; padding:0; box-sizing:border-box; }
+  body { font-family:'Segoe UI',Tahoma,Arial,sans-serif; background:var(--bg); color:var(--text); min-height:100vh; }
+
+  /* ── HEADER ── */
+  header {
+    background: linear-gradient(135deg, #0f172a 0%, #1a3a6b 50%, #0ea5e9 100%);
+    padding: 40px 30px 30px;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+  }
+  header::before {
+    content:'';
+    position:absolute; inset:0;
+    background: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.04'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+  }
+  header .logo-ring {
+    width:80px; height:80px; border-radius:50%;
+    background: linear-gradient(135deg,#f59e0b,#0ea5e9);
+    display:inline-flex; align-items:center; justify-content:center;
+    font-size:36px; margin-bottom:15px;
+    box-shadow: 0 0 30px rgba(14,165,233,0.5);
+    animation: pulse-ring 3s ease-in-out infinite;
+  }
+  @keyframes pulse-ring { 0%,100%{box-shadow:0 0 30px rgba(14,165,233,0.5)} 50%{box-shadow:0 0 60px rgba(14,165,233,0.9)} }
+  header h1 { font-size:clamp(22px,4vw,36px); font-weight:800; letter-spacing:1px; text-shadow:0 2px 10px rgba(0,0,0,0.5); }
+  header h2 { font-size:clamp(14px,2vw,18px); color:#93c5fd; margin-top:8px; font-weight:400; }
+  .header-badges { display:flex; justify-content:center; gap:12px; flex-wrap:wrap; margin-top:20px; }
+  .badge { background:rgba(255,255,255,0.1); backdrop-filter:blur(10px); border:1px solid rgba(255,255,255,0.2); padding:6px 16px; border-radius:50px; font-size:13px; color:#e2e8f0; }
+
+  /* ── NAV TABS ── */
+  .nav-wrap { background:var(--bg2); border-bottom:1px solid var(--border); sticky; top:0; z-index:100; }
+  .nav-tabs { display:flex; overflow-x:auto; gap:4px; padding:8px 20px; scrollbar-width:none; }
+  .nav-tabs::-webkit-scrollbar { display:none; }
+  .nav-tab { padding:8px 18px; border-radius:50px; cursor:pointer; white-space:nowrap; font-size:13px; font-weight:600; transition:all 0.3s; color:var(--text2); border:1px solid transparent; }
+  .nav-tab:hover { color:var(--text); background:var(--bg3); }
+  .nav-tab.active { background: linear-gradient(135deg,var(--primary-light),var(--secondary)); color:white; border-color:transparent; box-shadow:0 4px 15px rgba(37,99,235,0.4); }
+
+  /* ── MAIN CONTENT ── */
+  main { padding:24px 20px; max-width:1400px; margin:0 auto; }
+  .section { display:none; animation:fadeIn 0.4s ease; }
+  .section.active { display:block; }
+  @keyframes fadeIn { from{opacity:0;transform:translateY(10px)} to{opacity:1;transform:translateY(0)} }
+
+  /* ── STAT CARDS ── */
+  .kpi-grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(180px,1fr)); gap:16px; margin-bottom:28px; }
+  .kpi-card {
+    background:var(--card);
+    border-radius:var(--radius);
+    padding:22px 18px;
+    text-align:center;
+    border:1px solid var(--border);
+    position:relative; overflow:hidden;
+    transition:transform 0.3s, box-shadow 0.3s;
+  }
+  .kpi-card:hover { transform:translateY(-4px); box-shadow:var(--shadow); }
+  .kpi-card::before { content:''; position:absolute; top:0; left:0; right:0; height:3px; }
+  .kpi-card.blue::before { background:linear-gradient(90deg,var(--primary-light),var(--secondary)); }
+  .kpi-card.green::before { background:linear-gradient(90deg,#10b981,#34d399); }
+  .kpi-card.yellow::before { background:linear-gradient(90deg,#f59e0b,#fcd34d); }
+  .kpi-card.purple::before { background:linear-gradient(90deg,#8b5cf6,#a78bfa); }
+  .kpi-card.pink::before { background:linear-gradient(90deg,#ec4899,#f9a8d4); }
+  .kpi-icon { font-size:30px; margin-bottom:10px; }
+  .kpi-value { font-size:clamp(26px,4vw,38px); font-weight:800; line-height:1; }
+  .kpi-label { font-size:12px; color:var(--text2); margin-top:6px; font-weight:500; }
+  .kpi-sub { font-size:11px; color:var(--text2); margin-top:3px; }
+
+  /* ── SECTION TITLE ── */
+  .section-title { display:flex; align-items:center; gap:12px; margin-bottom:20px; }
+  .section-title h3 { font-size:20px; font-weight:700; }
+  .section-title .line { flex:1; height:2px; background:linear-gradient(90deg,var(--primary-light),transparent); }
+
+  /* ── GRID LAYOUTS ── */
+  .grid-2 { display:grid; grid-template-columns:1fr 1fr; gap:20px; }
+  .grid-3 { display:grid; grid-template-columns:repeat(3,1fr); gap:16px; }
+  @media(max-width:900px) { .grid-2,.grid-3 { grid-template-columns:1fr; } }
+
+  /* ── CHART CARD ── */
+  .chart-card {
+    background:var(--card); border-radius:var(--radius);
+    padding:22px; border:1px solid var(--border);
+    box-shadow:var(--shadow);
+  }
+  .chart-card h4 { font-size:14px; color:var(--text2); margin-bottom:16px; font-weight:600; }
+  .chart-wrap { position:relative; }
+
+  /* ── CLASS CARDS GRID ── */
+  .class-grid { display:grid; grid-template-columns:repeat(auto-fill,minmax(300px,1fr)); gap:18px; margin-bottom:28px; }
+  .class-card {
+    background:var(--card2); border-radius:var(--radius);
+    padding:20px; border:1px solid var(--border);
+    cursor:pointer; transition:all 0.3s;
+    position:relative; overflow:hidden;
+  }
+  .class-card:hover { transform:translateY(-3px); border-color:var(--primary-light); box-shadow:0 8px 24px rgba(37,99,235,0.2); }
+  .class-card.selected { border-color:var(--secondary); box-shadow:0 0 0 2px var(--secondary); }
+  .class-card-header { display:flex; justify-content:space-between; align-items:flex-start; margin-bottom:14px; }
+  .class-name { font-size:16px; font-weight:700; }
+  .class-avg-badge {
+    font-size:22px; font-weight:800;
+    background:linear-gradient(135deg,var(--primary-light),var(--secondary));
+    -webkit-background-clip:text; -webkit-text-fill-color:transparent;
+  }
+  .class-stats { display:grid; grid-template-columns:1fr 1fr; gap:8px; }
+  .cs-item { background:var(--bg3); border-radius:8px; padding:8px 10px; text-align:center; }
+  .cs-val { font-size:16px; font-weight:700; }
+  .cs-lbl { font-size:10px; color:var(--text2); margin-top:2px; }
+  .mini-bar { height:6px; border-radius:3px; background:var(--bg3); margin-top:12px; overflow:hidden; }
+  .mini-bar-fill { height:100%; border-radius:3px; background:linear-gradient(90deg,var(--success),var(--secondary)); transition:width 1s ease; }
+  .grade-dots { display:flex; gap:4px; margin-top:10px; flex-wrap:wrap; }
+  .dot { width:10px; height:10px; border-radius:50%; }
+
+  /* ── TABLE ── */
+  .table-wrap { overflow-x:auto; border-radius:var(--radius); border:1px solid var(--border); }
+  table { width:100%; border-collapse:collapse; }
+  thead tr { background:linear-gradient(135deg,var(--primary),var(--primary-light)); }
+  th { padding:12px 14px; font-size:13px; font-weight:600; white-space:nowrap; text-align:center; }
+  tbody tr { border-bottom:1px solid var(--border); transition:background 0.2s; }
+  tbody tr:hover { background:var(--bg3); }
+  td { padding:10px 14px; font-size:13px; text-align:center; }
+  td:first-child { text-align:right; font-weight:500; }
+  .grade-pill { display:inline-block; padding:3px 10px; border-radius:50px; font-size:11px; font-weight:700; }
+  .grade-Aplus { background:rgba(16,185,129,0.2); color:#10b981; }
+  .grade-A { background:rgba(34,197,94,0.2); color:#22c55e; }
+  .grade-Bplus { background:rgba(132,204,22,0.2); color:#84cc16; }
+  .grade-B { background:rgba(234,179,8,0.2); color:#eab308; }
+  .grade-Cplus { background:rgba(249,115,22,0.2); color:#f97316; }
+  .grade-C { background:rgba(239,68,68,0.2); color:#ef4444; }
+  .grade-D { background:rgba(220,38,38,0.2); color:#dc2626; }
+
+  /* ── DETAIL MODAL ── */
+  .modal-overlay { display:none; position:fixed; inset:0; background:rgba(0,0,0,0.7); z-index:1000; backdrop-filter:blur(4px); align-items:center; justify-content:center; padding:20px; }
+  .modal-overlay.open { display:flex; }
+  .modal { background:var(--bg2); border-radius:20px; width:100%; max-width:900px; max-height:90vh; overflow-y:auto; border:1px solid var(--border); box-shadow:0 20px 60px rgba(0,0,0,0.6); }
+  .modal-header { padding:24px 28px; border-bottom:1px solid var(--border); display:flex; justify-content:space-between; align-items:center; position:sticky; top:0; background:var(--bg2); z-index:2; }
+  .modal-close { width:36px; height:36px; border-radius:50%; background:var(--bg3); border:none; color:var(--text); font-size:18px; cursor:pointer; display:flex; align-items:center; justify-content:center; transition:background 0.2s; }
+  .modal-close:hover { background:var(--danger); }
+  .modal-body { padding:24px 28px; }
+
+  /* ── PROGRESS BARS ── */
+  .progress-item { margin-bottom:14px; }
+  .progress-label { display:flex; justify-content:space-between; font-size:13px; margin-bottom:6px; }
+  .progress-bar { height:10px; background:var(--bg3); border-radius:5px; overflow:hidden; }
+  .progress-fill { height:100%; border-radius:5px; transition:width 1.2s cubic-bezier(0.4,0,0.2,1); }
+
+  /* ── SUBJECT SUBJECT CARDS ── */
+  .subj-grid { display:grid; grid-template-columns:repeat(auto-fill,minmax(140px,1fr)); gap:12px; }
+  .subj-card { background:var(--bg3); border-radius:12px; padding:14px; text-align:center; border:1px solid var(--border); }
+  .subj-name { font-size:11px; color:var(--text2); margin-bottom:6px; }
+  .subj-score { font-size:24px; font-weight:800; }
+  .subj-bar { height:4px; border-radius:2px; background:var(--border); margin-top:8px; overflow:hidden; }
+  .subj-bar-fill { height:100%; border-radius:2px; }
+
+  /* ── RANKING TABLE ── */
+  .rank-item { display:flex; align-items:center; gap:12px; padding:10px 14px; border-radius:10px; margin-bottom:8px; background:var(--bg3); transition:background 0.2s; }
+  .rank-item:hover { background:var(--border); }
+  .rank-num { width:28px; height:28px; border-radius:50%; display:flex; align-items:center; justify-content:center; font-size:12px; font-weight:700; flex-shrink:0; }
+  .rank-1 { background:linear-gradient(135deg,#fbbf24,#f59e0b); color:#000; }
+  .rank-2 { background:linear-gradient(135deg,#94a3b8,#64748b); color:#fff; }
+  .rank-3 { background:linear-gradient(135deg,#b45309,#92400e); color:#fff; }
+  .rank-other { background:var(--border); color:var(--text2); }
+  .rank-name { flex:1; font-size:13px; }
+  .rank-score { font-size:13px; font-weight:700; color:var(--success); }
+
+  /* ── COMPARISON ── */
+  .comparison-bar-row { display:flex; align-items:center; gap:12px; margin-bottom:10px; }
+  .comparison-bar-label { width:140px; font-size:13px; text-align:right; flex-shrink:0; }
+  .comparison-bar-track { flex:1; height:32px; background:var(--bg3); border-radius:8px; overflow:hidden; position:relative; }
+  .comparison-bar-fill { height:100%; border-radius:8px; display:flex; align-items:center; padding-right:10px; justify-content:flex-end; font-size:12px; font-weight:700; color:white; transition:width 1.2s cubic-bezier(0.4,0,0.2,1); }
+
+  /* ── SCROLLBAR ── */
+  ::-webkit-scrollbar { width:6px; height:6px; }
+  ::-webkit-scrollbar-track { background:var(--bg2); }
+  ::-webkit-scrollbar-thumb { background:var(--bg3); border-radius:3px; }
+  ::-webkit-scrollbar-thumb:hover { background:var(--text2); }
+
+  /* ── TOOLTIP ── */
+  [data-tooltip] { position:relative; }
+  [data-tooltip]::after { content:attr(data-tooltip); position:absolute; bottom:110%; left:50%; transform:translateX(-50%); background:#000; color:#fff; padding:4px 10px; border-radius:6px; font-size:11px; white-space:nowrap; opacity:0; pointer-events:none; transition:opacity 0.2s; z-index:10; }
+  [data-tooltip]:hover::after { opacity:1; }
+
+  /* ── ANIMATIONS ── */
+  @keyframes countUp { from{opacity:0;transform:scale(0.5)} to{opacity:1;transform:scale(1)} }
+  .count-anim { animation:countUp 0.6s cubic-bezier(0.34,1.56,0.64,1) both; }
+
+  /* ── FOOTER ── */
+  footer { text-align:center; padding:30px; color:var(--text2); font-size:12px; border-top:1px solid var(--border); margin-top:40px; }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="logo-ring">🏫</div>
+  <h1>تحليل نتائج الترم الثاني</h1>
+  <h2>مدرسة علوم جازان العالمية - بنات — العام الدراسي 2024-2025</h2>
+  <div class="header-badges">
+    <span class="badge">📅 الترم الثاني</span>
+    <span class="badge" id="badge-classes">⏳ تحميل...</span>
+    <span class="badge" id="badge-students">⏳ تحميل...</span>
+    <span class="badge">📊 تحليل شامل</span>
+  </div>
+</header>
+
+<div class="nav-wrap">
+  <div class="nav-tabs">
+    <div class="nav-tab active" onclick="showSection('overview')">🏠 نظرة عامة</div>
+    <div class="nav-tab" onclick="showSection('classes')">🏫 الفصول</div>
+    <div class="nav-tab" onclick="showSection('comparison')">📊 المقارنة</div>
+    <div class="nav-tab" onclick="showSection('subjects')">📚 المواد</div>
+    <div class="nav-tab" onclick="showSection('students')">👤 الطلاب</div>
+  </div>
+</div>
+
+<main>
+
+<!-- ═══════════════════════ OVERVIEW ═══════════════════════ -->
+<section id="sec-overview" class="section active">
+  <div class="kpi-grid" id="kpi-grid"></div>
+
+  <div class="grid-2">
+    <div class="chart-card">
+      <h4>📈 متوسط الدرجات لكل فصل</h4>
+      <div class="chart-wrap" style="height:300px"><canvas id="chart-avg"></canvas></div>
+    </div>
+    <div class="chart-card">
+      <h4>🎯 نسبة الإتقان (≥80%) لكل فصل</h4>
+      <div class="chart-wrap" style="height:300px"><canvas id="chart-mastery"></canvas></div>
+    </div>
+  </div>
+
+  <div style="margin-top:20px" class="grid-2">
+    <div class="chart-card">
+      <h4>🏆 توزيع المستويات الكلي</h4>
+      <div class="chart-wrap" style="height:280px"><canvas id="chart-dist-total"></canvas></div>
+    </div>
+    <div class="chart-card">
+      <h4>🔄 مقارنة بنين/بنات</h4>
+      <div class="chart-wrap" style="height:280px"><canvas id="chart-gender"></canvas></div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════ CLASSES ═══════════════════════ -->
+<section id="sec-classes" class="section">
+  <div class="section-title">
+    <h3>🏫 تفاصيل الفصول الدراسية</h3>
+    <div class="line"></div>
+    <span style="font-size:13px;color:var(--text2)" id="filter-label">الكل</span>
+  </div>
+  <div style="display:flex;gap:8px;flex-wrap:wrap;margin-bottom:20px" id="grade-filters"></div>
+  <div class="class-grid" id="class-grid"></div>
+</section>
+
+<!-- ═══════════════════════ COMPARISON ═══════════════════════ -->
+<section id="sec-comparison" class="section">
+  <div class="section-title"><h3>📊 مقارنة الفصول</h3><div class="line"></div></div>
+  
+  <div class="chart-card" style="margin-bottom:20px">
+    <h4>📉 ترتيب الفصول حسب المتوسط</h4>
+    <div style="padding:10px 0" id="comparison-bars"></div>
+  </div>
+
+  <div class="grid-2">
+    <div class="chart-card">
+      <h4>📊 مقارنة الفصول — متوسط / نسبة الإتقان / A+</h4>
+      <div class="chart-wrap" style="height:320px"><canvas id="chart-radar"></canvas></div>
+    </div>
+    <div class="chart-card">
+      <h4>📋 ملخص مقارن</h4>
+      <div class="table-wrap" style="max-height:340px;overflow-y:auto">
+        <table id="summary-table">
+          <thead><tr>
+            <th>الفصل</th><th>الطلاب</th><th>المتوسط</th><th>نسبة النجاح</th><th>الإتقان</th><th>A+</th>
+          </tr></thead>
+          <tbody id="summary-tbody"></tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════ SUBJECTS ═══════════════════════ -->
+<section id="sec-subjects" class="section">
+  <div class="section-title"><h3>📚 تحليل المواد الدراسية</h3><div class="line"></div></div>
+  
+  <div style="display:flex;gap:8px;flex-wrap:wrap;margin-bottom:20px" id="subj-class-filters"></div>
+
+  <div class="grid-2">
+    <div class="chart-card">
+      <h4>📊 متوسط المواد للفصل المحدد</h4>
+      <div class="chart-wrap" style="height:300px"><canvas id="chart-subjects"></canvas></div>
+    </div>
+    <div class="chart-card">
+      <h4>📈 مقارنة مادة عبر الفصول</h4>
+      <div style="display:flex;gap:8px;flex-wrap:wrap;margin-bottom:12px" id="subj-select-btns"></div>
+      <div class="chart-wrap" style="height:240px"><canvas id="chart-subj-compare"></canvas></div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════ STUDENTS ═══════════════════════ -->
+<section id="sec-students" class="section">
+  <div class="section-title"><h3>👤 قائمة الطلاب</h3><div class="line"></div></div>
+  <div style="display:flex;gap:12px;flex-wrap:wrap;align-items:center;margin-bottom:16px">
+    <select id="student-class-select" onchange="renderStudentsTable()" style="background:var(--bg3);color:var(--text);border:1px solid var(--border);border-radius:8px;padding:8px 14px;font-size:13px;min-width:200px"></select>
+    <input id="student-search" type="text" placeholder="🔍 ابحث باسم الطالب..." oninput="renderStudentsTable()" style="background:var(--bg3);color:var(--text);border:1px solid var(--border);border-radius:8px;padding:8px 14px;font-size:13px;flex:1;min-width:200px">
+    <select id="grade-filter-select" onchange="renderStudentsTable()" style="background:var(--bg3);color:var(--text);border:1px solid var(--border);border-radius:8px;padding:8px 14px;font-size:13px">
+      <option value="">كل التقديرات</option>
+      <option value="A+">A+ ممتاز</option><option value="A">A جيد جداً</option>
+      <option value="B+">B+ جيد</option><option value="B">B مقبول</option>
+      <option value="C+">C+ متوسط</option><option value="C">C مرضي</option>
+      <option value="D">D ضعيف</option>
+    </select>
+  </div>
+  <div class="table-wrap">
+    <table><thead><tr><th>#</th><th>اسم الطالب</th><th>النسبة</th><th>التقدير</th><th>المستوى</th></tr></thead>
+    <tbody id="students-tbody"></tbody></table>
+  </div>
+  <div style="text-align:center;color:var(--text2);font-size:12px;margin-top:12px" id="student-count-label"></div>
+</section>
+
+</main>
+
+<!-- MODAL -->
+<div class="modal-overlay" id="modal-overlay" onclick="closeModal(event)">
+  <div class="modal" id="modal-content">
+    <div class="modal-header">
+      <div>
+        <h3 id="modal-title" style="font-size:18px;font-weight:700"></h3>
+        <p id="modal-subtitle" style="font-size:13px;color:var(--text2);margin-top:4px"></p>
+      </div>
+      <button class="modal-close" onclick="closeModal()">✕</button>
+    </div>
+    <div class="modal-body" id="modal-body"></div>
+  </div>
+</div>
+
+<footer>
+  <p>📊 تحليل نتائج الترم الثاني | مدرسة علوم جازان العالمية - بنات | 2024-2025</p>
+  <p style="margin-top:6px">جميع الحقوق محفوظة — تم إنشاؤه بواسطة نظام التحليل الذكي</p>
+</footer>
+
+<script>
+
+const RAW_DATA = [{"label": "Grade 1A (Girls)", "label_ar": "الصف 1A - بنات", "grade_num": 1, "n": 20, "avg": 98.2, "max_pct": 99.8, "min_pct": 90.5, "pass_rate": 100.0, "mastery_rate": 100.0, "aplus_rate": 100.0, "dist": {"A+": 20, "A": 0, "B+": 0, "B": 0, "C+": 0, "C": 0, "D": 0}, "subj_avgs": {"ENGLISH": 98.2, "MATHS": 96.4, "SCIENCE": 96.5, "H/U/A/B": 99.4, "I/T/M": 99.6, "COMPUTER": 98.8}, "subjects": ["ENGLISH", "MATHS", "SCIENCE", "H/U/A/B", "I/T/M", "COMPUTER"], "struggling": [], "top": [{"name": "Aathika Zuhra. A", "pct": 99.67}, {"name": "Shadan Muath", "pct": 99.17}, {"name": "Ladan Muath", "pct": 99.0}, {"name": "Ameera Abdulqadir", "pct": 98.83}, {"name": "Rateel Subair", "pct": 99.67}], "students": [{"name": "Aathika Zuhra. A", "pct": 99.67, "grade": "A+"}, {"name": "Shadan Muath", "pct": 99.17, "grade": "A+"}, {"name": "Ladan Muath", "pct": 99.0, "grade": "A+"}, {"name": "Ameera Abdulqadir", "pct": 98.83, "grade": "A+"}, {"name": "Rateel Subair", "pct": 99.67, "grade": "A+"}, {"name": "Karama Mohamed", "pct": 99.5, "grade": "A+"}, {"name": "Shaden Ali Muyidi", "pct": 97.83, "grade": "A+"}, {"name": "Noor Yahya Ali", "pct": 98.83, "grade": "A+"}, {"name": "Farah Alaa Aljahni", "pct": 94.5, "grade": "A+"}, {"name": "Layan Mujahid", "pct": 99.33, "grade": "A+"}, {"name": "Yara Ogail", "pct": 99.67, "grade": "A+"}, {"name": "Karla Mohamed", "pct": 99.83, "grade": "A+"}, {"name": "Joud Alkhizar", "pct": 99.33, "grade": "A+"}, {"name": "Kinda Abdullah", "pct": 99.5, "grade": "A+"}, {"name": "Tasneem Salah", "pct": 98.83, "grade": "A+"}, {"name": "Ziya Aris", "pct": 99.83, "grade": "A+"}, {"name": "Lamar Majed", "pct": 98.83, "grade": "A+"}, {"name": "Ghazlan Muhammed", "pct": 90.5, "grade": "A+"}, {"name": "Elan Hmad Hakami", "pct": 98.83, "grade": "A+"}, {"name": "Leen Ayman", "pct": 91.67, "grade": "A+"}]}, {"label": "Grade 1C (Boys)", "label_ar": "الصف 1C - بنين", "grade_num": 1, "n": 21, "avg": 97.5, "max_pct": 100.0, "min_pct": 84.3, "pass_rate": 100.0, "mastery_rate": 100.0, "aplus_rate": 90.5, "dist": {"A+": 19, "A": 2, "B+": 0, "B": 0, "C+": 0, "C": 0, "D": 0}, "subj_avgs": {"ENGLISH": 96.0, "MATHS": 97.7, "SCIENCE": 97.4, "H/U/A/B": 97.6, "I/T/M": 99.1, "COMPUTER": 97.1}, "subjects": ["ENGLISH", "MATHS", "SCIENCE", "H/U/A/B", "I/T/M", "COMPUTER"], "struggling": [], "top": [{"name": "Jawad Adel Mohammed Mahnashi", "pct": 99.67}, {"name": "Feras Ali Mohammed Awaji", "pct": 99.5}, {"name": "Nazih Muwaffaq Omr Khardli", "pct": 95.33}, {"name": "Saud Mufarrij Saud Alsubaie", "pct": 99.17}, {"name": "Alwaleed Atef Shwqi Kanni", "pct": 98.5}], "students": [{"name": "Jawad Adel Mohammed Mahnashi", "pct": 99.67, "grade": "A+"}, {"name": "Feras Ali Mohammed Awaji", "pct": 99.5, "grade": "A+"}, {"name": "Nazih Muwaffaq Omr Khardli", "pct": 95.33, "grade": "A+"}, {"name": "Saud Mufarrij Saud Alsubaie", "pct": 99.17, "grade": "A+"}, {"name": "Alwaleed Atef Shwqi Kanni", "pct": 98.5, "grade": "A+"}, {"name": "Mohamed Elamir Saleh Khalil", "pct": 99.83, "grade": "A+"}, {"name": "Ahmed Bassim Othman Aljaradi", "pct": 99.33, "grade": "A+"}, {"name": "Knan Alhassan Ali Hakami", "pct": 98.17, "grade": "A+"}, {"name": "Fahad Abdullah Hashim Mousa", "pct": 84.33, "grade": "A"}, {"name": "Aws Naser Mohammed Sawadi", "pct": 100.0, "grade": "A+"}, {"name": "Naif Mohammed Al Shareef", "pct": 98.0, "grade": "A+"}, {"name": "Ahmed Khalid Abdallah Ageep", "pct": 99.33, "grade": "A+"}, {"name": "Abobakr Khalid Abdallah Ageep", "pct": 99.0, "grade": "A+"}, {"name": "Turky Meteb Jaber", "pct": 97.42, "grade": "A+"}, {"name": "Mohammed Bader Mohammed", "pct": 100.0, "grade": "A+"}, {"name": "Assr  Abdo Al- Hasani", "pct": 99.5, "grade": "A+"}, {"name": "Laith Kamel Ali Haider", "pct": 86.83, "grade": "A"}, {"name": "Ziyad Rami Mohammed Hakami", "pct": 100.0, "grade": "A+"}, {"name": "Aiham Haithm Mansour Ali", "pct": 98.83, "grade": "A+"}, {"name": "Abdullah Mohammed Ali Sahhari", "pct": 99.0, "grade": "A+"}, {"name": "Mohammed Adel Haider Ahmed", "pct": 95.67, "grade": "A+"}]}, {"label": "Grade 1D (Boys)", "label_ar": "الصف 1D - بنين", "grade_num": 1, "n": 22, "avg": 97.1, "max_pct": 100.0, "min_pct": 84.6, "pass_rate": 100.0, "mastery_rate": 100.0, "aplus_rate": 95.5, "dist": {"A+": 21, "A": 1, "B+": 0, "B": 0, "C+": 0, "C": 0, "D": 0}, "subj_avgs": {"ENGLISH": 94.2, "MATHS": 98.1, "SCIENCE": 94.9, "H/U/A/B": 98.6, "I/T/M": 99.2, "COMPUTER": 97.6}, "subjects": ["ENGLISH", "MATHS", "SCIENCE", "H/U/A/B", "I/T/M", "COMPUTER"], "struggling": [], "top": [{"name": "Ameer Mohammed Salah Alaqi", "pct": 97.33}, {"name": "Aehm Mohamed Shamseldin Mohamed", "pct": 96.67}, {"name": "Abdur Rehman Muhammad Saifullah", "pct": 98.83}, {"name": "Ayaan Muhammed Elayodath", "pct": 99.67}, {"name": "Raunak Raj", "pct": 99.17}], "students": [{"name": "Ameer Mohammed Salah Alaqi", "pct": 97.33, "grade": "A+"}, {"name": "Aehm Mohamed Shamseldin Mohamed", "pct": 96.67, "grade": "A+"}, {"name": "Abdur Rehman Muhammad Saifullah", "pct": 98.83, "grade": "A+"}, {"name": "Ayaan Muhammed Elayodath", "pct": 99.67, "grade": "A+"}, {"name": "Raunak Raj", "pct": 99.17, "grade": "A+"}, {"name": "Muhammad Ahyyan  Asif Abdul Majeed", "pct": 98.83, "grade": "A+"}, {"name": "Saud Mohammed Ibrahim Alhelali", "pct": 99.33, "grade": "A+"}, {"name": "Zeeshan Ahmed", "pct": 92.67, "grade": "A+"}, {"name": "Awab Osama Khalifa Mohammed", "pct": 95.25, "grade": "A+"}, {"name": "Nathaniel Kurian Joseph", "pct": 100.0, "grade": "A+"}, {"name": "Abduellah Ahmed Sulaiman Jafery", "pct": 97.33, "grade": "A+"}, {"name": "Nawaf Saad Abdulla", "pct": 84.58, "grade": "A"}, {"name": "Ahmed Osama Abdallatif", "pct": 99.0, "grade": "A+"}, {"name": "Ghassan Ahmed Abdo Sswadi", "pct": 95.33, "grade": "A+"}, {"name": "Mujtuba Mohammad Hessien Abass", "pct": 98.83, "grade": "A+"}, {"name": "Abdullah Ali Jubran Zaydi", "pct": 98.17, "grade": "A+"}, {"name": "Omer Tahir Abbas Dad", "pct": 95.0, "grade": "A+"}, {"name": "Mohammed Zohanuddin", "pct": 96.0, "grade": "A+"}, {"name": "Efan Ahmed", "pct": 98.5, "grade": "A+"}, {"name": "Pulkit  Rajpoot", "pct": 97.67, "grade": "A+"}, {"name": "Abdurabu Ahmad", "pct": 98.17, "grade": "A+"}, {"name": "Yassin Haitham Mohammed", "pct": 100.0, "grade": "A+"}]}, {"label": "Grade 2A (Girls)", "label_ar": "الصف 2A - بنات", "grade_num": 2, "n": 20, "avg": 98.8, "max_pct": 100.0, "min_pct": 93.1, "pass_rate": 100.0, "mastery_rate": 100.0, "aplus_rate": 100.0, "dist": {"A+": 20, "A": 0, "B+": 0, "B": 0, "C+": 0, "C": 0, "D": 0}, "subj_avgs": {"ENGLISH": 99.1, "MATHS": 97.9, "SCIENCE": 99.2, "H/U/A/B": 98.7, "I/T/M": 98.7, "COMPUTER": 99.4}, "subjects": ["ENGLISH", "MATHS", "SCIENCE", "H/U/A/B", "I/T/M", "COMPUTER"], "struggling": [], "top": [{"name": "Aleena Faisal Ali Syed", "pct": 99.0}, {"name": "Ilin Khaled Ali Khardali", "pct": 98.25}, {"name": "Jaidaa Mohammed Hassan Al Tubaqi", "pct": 99.67}, {"name": "Hafsa Gowhar Gani", "pct": 100.0}, {"name": "Khaula Younas", "pct": 99.58}], "students": [{"name": "Aleena Faisal Ali Syed", "pct": 99.0, "grade": "A+"}, {"name": "Ilin Khaled Ali Khardali", "pct": 98.25, "grade": "A+"}, {"name": "Jaidaa Mohammed Hassan Al Tubaqi", "pct": 99.67, "grade": "A+"}, {"name": "Hafsa Gowhar Gani", "pct": 100.0, "grade": "A+"}, {"name": "Khaula Younas", "pct": 99.58, "grade": "A+"}, {"name": "Dina Thamer Mohammed Brek", "pct": 99.08, "grade": "A+"}, {"name": "Reham Nasr Aldeen Altayeb", "pct": 93.08, "grade": "A+"}, {"name": "Sumiya Farhad", "pct": 99.0, "grade": "A+"}, {"name": "Syeda Fariya -Fatima", "pct": 99.42, "grade": "A+"}, {"name": "Sheikh Ameerah-Raheel", "pct": 99.08, "grade": "A+"}, {"name": "Tahira Tazmeen Mohammed Masud Moslem", "pct": 99.83, "grade": "A+"}, {"name": "Aisha Wajid Hayat Hayat", "pct": 97.17, "grade": "A+"}, {"name": "Fatima Wajid Hayat Hayat", "pct": 96.67, "grade": "A+"}, {"name": "Lana Mohammed Abdu Hakami", "pct": 99.75, "grade": "A+"}, {"name": "Miral Majed Abdu Hashim", "pct": 99.92, "grade": "A+"}, {"name": "Hams Ahmed Jobran Mohsen", "pct": 97.83, "grade": "A+"}, {"name": "Ajwa Sadiq", "pct": 99.58, "grade": "A+"}, {"name": "Youmna Islam Gamil Mahmoud", "pct": 100.0, "grade": "A+"}, {"name": "Haidy Mohamed Gamal Eltantawi", "pct": 99.5, "grade": "A+"}, {"name": "Sara Ibrahim Fathi Khalil", "pct": 100.0, "grade": "A+"}]}, {"label": "Grade 2B (Girls)", "label_ar": "الصف 2B - بنات", "grade_num": 2, "n": 23, "avg": 98.0, "max_pct": 100.0, "min_pct": 85.3, "pass_rate": 100.0, "mastery_rate": 100.0, "aplus_rate": 95.7, "dist": {"A+": 22, "A": 1, "B+": 0, "B": 0, "C+": 0, "C": 0, "D": 0}, "subj_avgs": {"ENGLISH": 98.9, "MATHS": 96.5, "SCIENCE": 98.9, "H/U/A/B": 98.5, "I/T/M": 97.0, "COMPUTER": 97.9}, "subjects": ["ENGLISH", "MATHS", "SCIENCE", "H/U/A/B", "I/T/M", "COMPUTER"], "struggling": [], "top": [{"name": "Eshal Junaid Naicker", "pct": 92.67}, {"name": "Maisha Ali", "pct": 98.75}, {"name": "Anaya Fatima", "pct": 95.67}, {"name": "Judy Murtada Ahmed Mohamed", "pct": 98.5}, {"name": "Mahiya Noor", "pct": 97.58}], "students": [{"name": "Eshal Junaid Naicker", "pct": 92.67, "grade": "A+"}, {"name": "Maisha Ali", "pct": 98.75, "grade": "A+"}, {"name": "Anaya Fatima", "pct": 95.67, "grade": "A+"}, {"name": "Judy Murtada Ahmed Mohamed", "pct": 98.5, "grade": "A+"}, {"name": "Mahiya Noor", "pct": 97.58, "grade": "A+"}, {"name": "Haneena Noushad", "pct": 98.25, "grade": "A+"}, {"name": "Rateel Abdelrahman Mohammed", "pct": 98.92, "grade": "A+"}, {"name": "Hiza Dilkash", "pct": 99.58, "grade": "A+"}, {"name": "Jomana Salaheldein Elkhadir", "pct": 100.0, "grade": "A+"}, {"name": "Farida Ali Kamel Seddik Khalil", "pct": 99.92, "grade": "A+"}, {"name": "Fatma Ali Kamel Seddik Khalil", "pct": 97.92, "grade": "A+"}, {"name": "Mieral Hassan Ahmed Halawi", "pct": 100.0, "grade": "A+"}, {"name": "Ola Usman", "pct": 98.92, "grade": "A+"}, {"name": "Saja Abdallah Barshed", "pct": 99.42, "grade": "A+"}, {"name": "Hana Ahmed Ibrahimelghol", "pct": 99.42, "grade": "A+"}, {"name": "Rabeeha Fayaz", "pct": 99.83, "grade": "A+"}, {"name": "Aleeza Ahsan", "pct": 99.58, "grade": "A+"}, {"name": "Ayeza Ihtesham", "pct": 99.0, "grade": "A+"}, {"name": "Aina  Sajeer", "pct": 97.92, "grade": "A+"}, {"name": "Mashitha  Faisal", "pct": 96.5, "grade": "A+"}, {"name": "Fariha  Qureshi", "pct": 85.33, "grade": "A"}, {"name": "Lareen Muath Hussain Hakami", "pct": 100.0, "grade": "A+"}, {"name": "Anayah Wasim", "pct": 99.17, "grade": "A+"}]}, {"label": "Grade 2C (Girls)", "label_ar": "الصف 2C - بنات", "grade_num": 2, "n": 23, "avg": 98.1, "max_pct": 100.0, "min_pct": 91.6, "pass_rate": 100.0, "mastery_rate": 100.0, "aplus_rate": 100.0, "dist": {"A+": 23, "A": 0, "B+": 0, "B": 0, "C+": 0, "C": 0, "D": 0}, "subj_avgs": {"ENGLISH": 97.7, "MATHS": 97.5, "SCIENCE": 98.2, "H/U/A/B": 98.7, "I/T/M": 98.8, "COMPUTER": 97.5}, "subjects": ["ENGLISH", "MATHS", "SCIENCE", "H/U/A/B", "I/T/M", "COMPUTER"], "struggling": [], "top": [{"name": "Abdulaziz Kamal Mohammed", "pct": 92.92}, {"name": "Ahmed Abouobida Abdulrahim", "pct": 100.0}, {"name": "Ali Samer Ali Zohir", "pct": 97.58}, {"name": "Almugyirah Majed Mohammed", "pct": 93.58}, {"name": "Amir Abdulah Ali Al Shami", "pct": 97.58}], "students": [{"name": "Abdulaziz Kamal Mohammed", "pct": 92.92, "grade": "A+"}, {"name": "Ahmed Abouobida Abdulrahim", "pct": 100.0, "grade": "A+"}, {"name": "Ali Samer Ali Zohir", "pct": 97.58, "grade": "A+"}, {"name": "Almugyirah Majed Mohammed", "pct": 93.58, "grade": "A+"}, {"name": "Amir Abdulah Ali Al Shami", "pct": 97.58, "grade": "A+"}, {"name": "Ayad Ahmed Mohamed Elhassan", "pct": 100.0, "grade": "A+"}, {"name": "Bishr Faisal - Faisal", "pct": 99.75, "grade": "A+"}, {"name": "Ehaan Ahsan", "pct": 98.75, "grade": "A+"}, {"name": "Fahad Emdad", "pct": 97.17, "grade": "A+"}, {"name": "Faisal Mohammed Rajab Saeed", "pct": 98.25, "grade": "A+"}, {"name": "Iyas Waleed Hassan Al Yami", "pct": 97.67, "grade": "A+"}, {"name": "Mohammad Rizwan- Irshad", "pct": 99.67, "grade": "A+"}, {"name": "Mohammad Saad Shadab", "pct": 100.0, "grade": "A+"}, {"name": "Mohammad Zayyan", "pct": 99.92, "grade": "A+"}, {"name": "Muhammad Samar Ali", "pct": 99.67, "grade": "A+"}, {"name": "Nabeel Basel Nabeel Mohammed", "pct": 100.0, "grade": "A+"}, {"name": "Qusai Hassan Mohamed Halawi", "pct": 98.67, "grade": "A+"}, {"name": "Qusai Hussain Abdullah Hakami", "pct": 91.58, "grade": "A+"}, {"name": "Rakan Mohammed Fadil Abdelmohsin", "pct": 100.0, "grade": "A+"}, {"name": "Ruwwad Osama Ahmed Moafa", "pct": 99.67, "grade": "A+"}, {"name": "Taj Elamin Tagelsir Fagier", "pct": 100.0, "grade": "A+"}, {"name": "Yamen Yousif", "pct": 96.25, "grade": "A+"}, {"name": "Yassin Mohammed Elfadil Ibrahim", "pct": 96.83, "grade": "A+"}]}, {"label": "Grade 2D (Boys)", "label_ar": "الصف 2D - بنين", "grade_num": 2, "n": 22, "avg": 98.9, "max_pct": 100.0, "min_pct": 95.2, "pass_rate": 100.0, "mastery_rate": 100.0, "aplus_rate": 100.0, "dist": {"A+": 22, "A": 0, "B+": 0, "B": 0, "C+": 0, "C": 0, "D": 0}, "subj_avgs": {"ENGLISH": 99.5, "MATHS": 98.2, "SCIENCE": 98.7, "H/U/A/B": 98.2, "I/T/M": 99.8, "COMPUTER": 99.1}, "subjects": ["ENGLISH", "MATHS", "SCIENCE", "H/U/A/B", "I/T/M", "COMPUTER"], "struggling": [], "top": [{"name": "Ahmed Hamoud Mohammed Talibi", "pct": 99.83}, {"name": "Aadhavan Komaghan Manoharan", "pct": 99.17}, {"name": "Aiden Shyam Abraham", "pct": 99.83}, {"name": "Jari Haider Zaidi", "pct": 98.58}, {"name": "Jeremiah George", "pct": 99.67}], "students": [{"name": "Ahmed Hamoud Mohammed Talibi", "pct": 99.83, "grade": "A+"}, {"name": "Aadhavan Komaghan Manoharan", "pct": 99.17, "grade": "A+"}, {"name": "Aiden Shyam Abraham", "pct": 99.83, "grade": "A+"}, {"name": "Jari Haider Zaidi", "pct": 98.58, "grade": "A+"}, {"name": "Jeremiah George", "pct": 99.67, "grade": "A+"}, {"name": "Khaled Waleed Abdulrahman Abdullah", "pct": 98.58, "grade": "A+"}, {"name": "Salem Nasser Khamis Al Jaaidi", "pct": 99.92, "grade": "A+"}, {"name": "Sheikh Muhammad Arham", "pct": 99.42, "grade": "A+"}, {"name": "Safwan Ahamed", "pct": 100.0, "grade": "A+"}, {"name": "Dahi Hassan Muhamed Ibrahim", "pct": 98.67, "grade": "A+"}, {"name": "Ali Abdu Ali Muhjib", "pct": 97.25, "grade": "A+"}, {"name": "Faris Ahmed Hamed Abdulqader", "pct": 95.17, "grade": "A+"}, {"name": "Fadil Abdelmuhsin Ehlag Ahmed", "pct": 99.83, "grade": "A+"}, {"name": "Sakhr", "pct": 97.67, "grade": "A+"}, {"name": "Mohammad Danish Ali", "pct": 99.5, "grade": "A+"}, {"name": "Mohammad Chaudhry Waqar Ahmad", "pct": 98.42, "grade": "A+"}, {"name": "Mohammed Ali Mohammed Nasib", "pct": 96.92, "grade": "A+"}, {"name": "Mohammed Majed Mohammed Shawk", "pct": 99.5, "grade": "A+"}, {"name": "Murad Ahmed Mohammed Abiri", "pct": 98.92, "grade": "A+"}, {"name": "Musab Bin Shahid", "pct": 100.0, "grade": "A+"}, {"name": "Karem Khalid Omer", "pct": 99.0, "grade": "A+"}, {"name": "Ibrahim", "pct": 100.0, "grade": "A+"}]}, {"label": "Grade 2E (Boys)", "label_ar": "الصف 2E - بنين", "grade_num": 2, "n": 20, "avg": 97.2, "max_pct": 100.0, "min_pct": 81.3, "pass_rate": 100.0, "mastery_rate": 100.0, "aplus_rate": 90.0, "dist": {"A+": 18, "A": 2, "B+": 0, "B": 0, "C+": 0, "C": 0, "D": 0}, "subj_avgs": {"ENGLISH": 99.0, "MATHS": 97.6, "SCIENCE": 97.8, "H/U/A/B": 98.6, "I/T/M": 96.9, "COMPUTER": 97.9}, "subjects": ["ENGLISH", "MATHS", "SCIENCE", "H/U/A/B", "I/T/M", "COMPUTER"], "struggling": [], "top": [{"name": "Adyan Parvaiz-Khanday", "pct": 100.0}, {"name": "Amjad Amar Abdalmutalab Mohammad", "pct": 100.0}, {"name": "Eyad Walid Mohammed Gasem", "pct": 97.75}, {"name": "Rahamatullah Farooq", "pct": 99.92}, {"name": "Zakariyah Mujahid Abdulwahab Baishen", "pct": 98.0}], "students": [{"name": "Adyan Parvaiz-Khanday", "pct": 100.0, "grade": "A+"}, {"name": "Amjad Amar Abdalmutalab Mohammad", "pct": 100.0, "grade": "A+"}, {"name": "Eyad Walid Mohammed Gasem", "pct": 97.75, "grade": "A+"}, {"name": "Rahamatullah Farooq", "pct": 99.92, "grade": "A+"}, {"name": "Zakariyah Mujahid Abdulwahab Baishen", "pct": 98.0, "grade": "A+"}, {"name": "Salman Awadh Awadh Abdulelah", "pct": 84.92, "grade": "A"}, {"name": "Salih Bin Noushad Puthiyedath", "pct": 94.67, "grade": "A+"}, {"name": "Ezzeldin Ramy Mohamed Elhosienty Tahoon", "pct": 100.0, "grade": "A+"}, {"name": "Ali Mohammed Ali Dhok", "pct": 99.33, "grade": "A+"}, {"name": "Christo Sobin Scaria", "pct": 99.83, "grade": "A+"}, {"name": "Mohammed Arham Khan", "pct": 98.17, "grade": "A+"}, {"name": "Mohammed Saif Maricar Ahamed Maricar", "pct": 96.83, "grade": "A+"}, {"name": "Muhammed Shahazad", "pct": 97.83, "grade": "A+"}, {"name": "Mohannad Mohmmed Anis Shehadeh", "pct": 99.58, "grade": "A+"}, {"name": "Naif Baha Mohmmed Zelai", "pct": 97.42, "grade": "A+"}, {"name": "Yaser Moaz Mahmoud Sharbash", "pct": 100.0, "grade": "A+"}, {"name": "Yagil Arun Prasanna", "pct": 98.0, "grade": "A+"}, {"name": "Ayan Khan Shams Ul Iqbal", "pct": 100.0, "grade": "A+"}, {"name": "Abdullah Mazhar", "pct": 99.42, "grade": "A+"}, {"name": "Humdan", "pct": 81.33, "grade": "A"}]}, {"label": "Grade 3A (Girls)", "label_ar": "الصف 3A - بنات", "grade_num": 3, "n": 21, "avg": 98.3, "max_pct": 100.0, "min_pct": 88.6, "pass_rate": 100.0, "mastery_rate": 100.0, "aplus_rate": 95.2, "dist": {"A+": 20, "A": 1, "B+": 0, "B": 0, "C+": 0, "C": 0, "D": 0}, "subj_avgs": {"ENGLISH": 98.9, "MATHS": 98.3, "SCIENCE": 98.0, "H/U/A/B": 97.8, "I/T/M": 97.7, "COMPUTER": 99.2}, "subjects": ["ENGLISH", "MATHS", "SCIENCE", "H/U/A/B", "I/T/M", "COMPUTER"], "struggling": [], "top": [{"name": "Atchayaa Velmurugan", "pct": 98.83}, {"name": "Evelyn  George", "pct": 99.25}, {"name": "Ayra Akhtar", "pct": 99.67}, {"name": "Aiza Hammad", "pct": 98.75}, {"name": "Eshaal Fatima", "pct": 99.33}], "students": [{"name": "Atchayaa Velmurugan", "pct": 98.83, "grade": "A+"}, {"name": "Arwa Wahid", "pct": 88.58, "grade": "A"}, {"name": "Evelyn  George", "pct": 99.25, "grade": "A+"}, {"name": "Ayra Akhtar", "pct": 99.67, "grade": "A+"}, {"name": "Aiza Hammad", "pct": 98.75, "grade": "A+"}, {"name": "Eshaal Fatima", "pct": 99.33, "grade": "A+"}, {"name": "Hayah Fathima", "pct": 100.0, "grade": "A+"}, {"name": "Dua Israr", "pct": 97.25, "grade": "A+"}, {"name": "Raghad Abdallah", "pct": 99.08, "grade": "A+"}, {"name": "Ruaa Mohammed", "pct": 99.92, "grade": "A+"}, {"name": "Zainab Yazdani", "pct": 95.75, "grade": "A+"}, {"name": "Afiya  Khan", "pct": 99.42, "grade": "A+"}, {"name": "Ola Nagy", "pct": 98.75, "grade": "A+"}, {"name": "Kadi Abdullah", "pct": 99.33, "grade": "A+"}, {"name": "Kahkashan Tabassum", "pct": 93.83, "grade": "A+"}, {"name": "Lareen Hatem", "pct": 100.0, "grade": "A+"}, {"name": "Mufliha Konain", "pct": 99.58, "grade": "A+"}, {"name": "Naba Mohd", "pct": 98.17, "grade": "A+"}, {"name": "Noorain Subhan", "pct": 99.92, "grade": "A+"}, {"name": "Waad Erwah", "pct": 99.67, "grade": "A+"}, {"name": "Syeda Aisha Mairaj", "pct": 99.58, "grade": "A+"}]}, {"label": "Grade 3B (Girls)", "label_ar": "الصف 3B - بنات", "grade_num": 3, "n": 15, "avg": 98.8, "max_pct": 100.0, "min_pct": 96.7, "pass_rate": 100.0, "mastery_rate": 100.0, "aplus_rate": 100.0, "dist": {"A+": 15, "A": 0, "B+": 0, "B": 0, "C+": 0, "C": 0, "D": 0}, "subj_avgs": {"ENGLISH": 97.6, "MATHS": 98.7, "SCIENCE": 98.4, "H/U/A/B": 99.3, "I/T/M": 99.1, "COMPUTER": 99.8}, "subjects": ["ENGLISH", "MATHS", "SCIENCE", "H/U/A/B", "I/T/M", "COMPUTER"], "struggling": [], "top": [{"name": "Ameerah Shahid", "pct": 99.58}, {"name": "Anabia Amjad Ali", "pct": 98.75}, {"name": "Hadiya Noushad", "pct": 96.83}, {"name": "Jude Abdualrahman Hussein Arishi", "pct": 98.08}, {"name": "Jouri Essadek", "pct": 96.67}], "students": [{"name": "Ameerah Shahid", "pct": 99.58, "grade": "A+"}, {"name": "Anabia Amjad Ali", "pct": 98.75, "grade": "A+"}, {"name": "Hadiya Noushad", "pct": 96.83, "grade": "A+"}, {"name": "Jude Abdualrahman Hussein Arishi", "pct": 98.08, "grade": "A+"}, {"name": "Jouri Essadek", "pct": 96.67, "grade": "A+"}, {"name": "Maryam Ali Awad Mohammed", "pct": 100.0, "grade": "A+"}, {"name": "Nadia Choudhury", "pct": 99.25, "grade": "A+"}, {"name": "Nourseen Hassan Mahmoud Nassar", "pct": 99.92, "grade": "A+"}, {"name": "Ramzia Zareesh", "pct": 99.75, "grade": "A+"}, {"name": "Rittal Yasser Mohamed Ahmed", "pct": 98.0, "grade": "A+"}, {"name": "Rovan Mostafa Abdelgaber", "pct": 100.0, "grade": "A+"}, {"name": "Saherish Ruhab", "pct": 100.0, "grade": "A+"}, {"name": "Tulin Bakri Mohammed Algaari", "pct": 99.25, "grade": "A+"}, {"name": "Ryan Mohamad Abdelrahim Ibrahim", "pct": 96.83, "grade": "A+"}, {"name": "Sehrish Arif", "pct": 99.58, "grade": "A+"}]}, {"label": "Grade 4A (Girls)", "label_ar": "الصف 4A - بنات", "grade_num": 4, "n": 27, "avg": 97.4, "max_pct": 100.0, "min_pct": 84.4, "pass_rate": 100.0, "mastery_rate": 100.0, "aplus_rate": 96.3, "dist": {"A+": 26, "A": 1, "B+": 0, "B": 0, "C+": 0, "C": 0, "D": 0}, "subj_avgs": {"ENGLISH": 99.0, "MATHS": 93.6, "SCIENCE": 97.6, "H/U/A/B": 97.5, "I/T/M": 96.9, "SOCIAL": 99.1, "COMPUTER": 98.5}, "subjects": ["ENGLISH", "MATHS", "SCIENCE", "H/U/A/B", "I/T/M", "SOCIAL", "COMPUTER"], "struggling": [], "top": [{"name": "Amaaliya -Shahazad", "pct": 99.14}, {"name": "Inara  Ahmad", "pct": 97.29}, {"name": "Aysel Mohammed Anis Shahadah", "pct": 98.43}, {"name": "Elan Anas Nejeib Mohamed", "pct": 96.93}, {"name": "Tebyan Salah Dafa Allah Abdelrahman", "pct": 99.43}], "students": [{"name": "Amaaliya -Shahazad", "pct": 99.14, "grade": "A+"}, {"name": "Inara  Ahmad", "pct": 97.29, "grade": "A+"}, {"name": "Aysel Mohammed Anis Shahadah", "pct": 98.43, "grade": "A+"}, {"name": "Elan Anas Nejeib Mohamed", "pct": 96.93, "grade": "A+"}, {"name": "Tebyan Salah Dafa Allah Abdelrahman", "pct": 99.43, "grade": "A+"}, {"name": "Joliyan Mohammed Ahmed Maghfuri", "pct": 99.43, "grade": "A+"}, {"name": "Halima Sulaiman - Balarabe", "pct": 94.5, "grade": "A+"}, {"name": "Haneen Atef Ibrahim Hajer", "pct": 91.79, "grade": "A+"}, {"name": "Dana Mostafa Abdelalim Darwish", "pct": 92.57, "grade": "A+"}, {"name": "Rancy Mostafa Abdelgaber Tohamy", "pct": 99.64, "grade": "A+"}, {"name": "Razan Yagoub Abbker Adam", "pct": 99.57, "grade": "A+"}, {"name": "Rasil Mahmoud Saad Gadelrab", "pct": 96.43, "grade": "A+"}, {"name": "Rwan Erwah", "pct": 99.86, "grade": "A+"}, {"name": "Romaisa Hamid Mukhtar Khan Khan", "pct": 99.07, "grade": "A+"}, {"name": "Reem Idris Adam Suliman", "pct": 91.0, "grade": "A+"}, {"name": "Zainab Emadeldin Abdelrahim Yousif", "pct": 97.86, "grade": "A+"}, {"name": "Sarah Faisal - Puthiyodath", "pct": 84.43, "grade": "A"}, {"name": "Afifa - - Fathima", "pct": 100.0, "grade": "A+"}, {"name": "Leen Murtada Ahmed Mohamed", "pct": 96.64, "grade": "A+"}, {"name": "Leen Mutaz Faroug Abdelfattah", "pct": 99.93, "grade": "A+"}, {"name": "Maryam  Mahnoor", "pct": 99.57, "grade": "A+"}, {"name": "Mira Mohammed Mahmoud Alfar", "pct": 99.0, "grade": "A+"}, {"name": "Naqiya Mirza", "pct": 99.5, "grade": "A+"}, {"name": "Wasan Malik Abdu Hashim", "pct": 99.21, "grade": "A+"}, {"name": "Yara Turki Mohmmed Rajhi", "pct": 99.79, "grade": "A+"}, {"name": "Lara Ibrahim", "pct": 99.93, "grade": "A+"}, {"name": "Safiya Saeed", "pct": 100.0, "grade": "A+"}]}, {"label": "Grade 5A (Girls)", "label_ar": "الصف 5A - بنات", "grade_num": 5, "n": 17, "avg": 97.8, "max_pct": 99.8, "min_pct": 92.6, "pass_rate": 100.0, "mastery_rate": 100.0, "aplus_rate": 100.0, "dist": {"A+": 17, "A": 0, "B+": 0, "B": 0, "C+": 0, "C": 0, "D": 0}, "subj_avgs": {"ENGLISH": 97.4, "MATHS": 95.4, "SCIENCE": 98.9, "H/U/A/B": 95.9, "I/T/M": 99.2, "SAC": 99.4, "COMPUTER": 98.7}, "subjects": ["ENGLISH", "MATHS", "SCIENCE", "H/U/A/B", "I/T/M", "SAC", "COMPUTER"], "struggling": [], "top": [{"name": "Amal Hussein Abdullah Hakami", "pct": 98.29}, {"name": "Umme Aisha Siddiqa", "pct": 99.79}, {"name": "Brahmi Manoj Singh", "pct": 99.43}, {"name": "Julia Hassan Awaji Hakami", "pct": 97.64}, {"name": "Rida Mohammed Arshad Ali", "pct": 96.14}], "students": [{"name": "Amal Hussein Abdullah Hakami", "pct": 98.29, "grade": "A+"}, {"name": "Umme Aisha Siddiqa", "pct": 99.79, "grade": "A+"}, {"name": "Brahmi Manoj Singh", "pct": 99.43, "grade": "A+"}, {"name": "Julia Hassan Awaji Hakami", "pct": 97.64, "grade": "A+"}, {"name": "Rida Mohammed Arshad Ali", "pct": 96.14, "grade": "A+"}, {"name": "Syeda Sehrish Sadiq Hussain", "pct": 98.71, "grade": "A+"}, {"name": "Ayesha Muhammad Irfan", "pct": 94.43, "grade": "A+"}, {"name": "Aseel Muaamar Ali", "pct": 96.29, "grade": "A+"}, {"name": "Aisha Arif Khan", "pct": 92.64, "grade": "A+"}, {"name": "Areej Usman Muhammad Usman", "pct": 98.71, "grade": "A+"}, {"name": "Fatima Rehman", "pct": 99.71, "grade": "A+"}, {"name": "Maira Ahsan", "pct": 98.57, "grade": "A+"}, {"name": "Maira Siddiqui", "pct": 98.21, "grade": "A+"}, {"name": "Manahil Atta Ullah", "pct": 99.43, "grade": "A+"}, {"name": "Hidayah Fatima Negers Jamal", "pct": 98.36, "grade": "A+"}, {"name": "Abiha Hammad", "pct": 97.86, "grade": "A+"}, {"name": "Yousra Isameldein D. Abdelrazig", "pct": 99.07, "grade": "A+"}]}, {"label": "Grade 5B (Girls)", "label_ar": "الصف 5B - بنات", "grade_num": 5, "n": 14, "avg": 96.1, "max_pct": 99.5, "min_pct": 87.1, "pass_rate": 100.0, "mastery_rate": 100.0, "aplus_rate": 85.7, "dist": {"A+": 12, "A": 2, "B+": 0, "B": 0, "C+": 0, "C": 0, "D": 0}, "subj_avgs": {"ENGLISH": 92.5, "MATHS": 94.1, "SCIENCE": 96.8, "H/U/A/B": 95.1, "I/T/M": 99.6, "SAC": 99.1, "COMPUTER": 95.6}, "subjects": ["ENGLISH", "MATHS", "SCIENCE", "H/U/A/B", "I/T/M", "SAC", "COMPUTER"], "struggling": [], "top": [{"name": "Areeba Ali Ali Hamad", "pct": 99.21}, {"name": "Areen Mohamed Ahmad", "pct": 95.14}, {"name": "Aizah Riaz Khan", "pct": 99.5}, {"name": "Almas Mohammed Ali", "pct": 98.57}, {"name": "Amna Elsadig Mahgoub", "pct": 98.36}], "students": [{"name": "Areeba Ali Ali Hamad", "pct": 99.21, "grade": "A+"}, {"name": "Areen Mohamed Ahmad", "pct": 95.14, "grade": "A+"}, {"name": "Aizah Riaz Khan", "pct": 99.5, "grade": "A+"}, {"name": "Almas Mohammed Ali", "pct": 98.57, "grade": "A+"}, {"name": "Amna Elsadig Mahgoub", "pct": 98.36, "grade": "A+"}, {"name": "Bushra Tazeen", "pct": 97.07, "grade": "A+"}, {"name": "Gazal Ragah Ahmad", "pct": 94.0, "grade": "A+"}, {"name": "Humaira Asad Khalid", "pct": 96.86, "grade": "A+"}, {"name": "Hania Batool Ali Ahmad", "pct": 98.79, "grade": "A+"}, {"name": "Lareen Mohammed Yahya", "pct": 96.14, "grade": "A+"}, {"name": "Rahaf Mohammed Ali", "pct": 87.14, "grade": "A"}, {"name": "Talin Ahmed Saleh", "pct": 99.43, "grade": "A+"}, {"name": "Umme Aaliya Khatoon", "pct": 87.07, "grade": "A"}, {"name": "Taraf Rayan Alharbi", "pct": 98.36, "grade": "A+"}]}, {"label": "Grade 6A (Girls)", "label_ar": "الصف 6A - بنات", "grade_num": 6, "n": 19, "avg": 95.7, "max_pct": 99.8, "min_pct": 88.8, "pass_rate": 100.0, "mastery_rate": 100.0, "aplus_rate": 94.7, "dist": {"A+": 18, "A": 1, "B+": 0, "B": 0, "C+": 0, "C": 0, "D": 0}, "subj_avgs": {"ENGLISH": 91.6, "MATHS": 93.5, "SCIENCE": 96.0, "H/U/A/B": 94.6, "I/T/M": 98.6, "SAC": 97.9, "S.ST": 96.1, "COMPUTER": 97.2}, "subjects": ["ENGLISH", "MATHS", "SCIENCE", "H/U/A/B", "I/T/M", "SAC", "S.ST", "COMPUTER"], "struggling": [], "top": [{"name": "Aleena Shahir-Hussain", "pct": 92.94}, {"name": "Toga Salah Dafa Allah Abdelrahman", "pct": 95.75}, {"name": "Hafsa Subhan Mohammed Abdul", "pct": 97.44}, {"name": "Rose Ramzi Mohammed Haidar", "pct": 97.38}, {"name": "Saba Elhadari Elzamazmi Abdullah", "pct": 96.75}], "students": [{"name": "Aleena Shahir-Hussain", "pct": 92.94, "grade": "A+"}, {"name": "Toga Salah Dafa Allah Abdelrahman", "pct": 95.75, "grade": "A+"}, {"name": "Hafsa Subhan Mohammed Abdul", "pct": 97.44, "grade": "A+"}, {"name": "Rose Ramzi Mohammed Haidar", "pct": 97.38, "grade": "A+"}, {"name": "Saba Elhadari Elzamazmi Abdullah", "pct": 96.75, "grade": "A+"}, {"name": "Salma Mohammad Haseebuddin", "pct": 99.69, "grade": "A+"}, {"name": "Sanjana Mondey Bhuvanesh", "pct": 91.5, "grade": "A+"}, {"name": "Syeda Lubna Fatima", "pct": 99.81, "grade": "A+"}, {"name": "Shahad Zohair Yousef Hamed", "pct": 96.38, "grade": "A+"}, {"name": "Aaishah Khalid Qidwai", "pct": 99.31, "grade": "A+"}, {"name": "Abeer Azeem Haider", "pct": 88.75, "grade": "A"}, {"name": "Adeelah Sarfaraz", "pct": 99.44, "grade": "A+"}, {"name": "Fatima Abdualrahman Hassen Aresu", "pct": 97.06, "grade": "A+"}, {"name": "Loreen Khalel Maaber Mohammed Khormi", "pct": 93.5, "grade": "A+"}, {"name": "Maryam Munazzar Khalfe", "pct": 96.94, "grade": "A+"}, {"name": "Minatalla Murtada Ahmed Mohammed", "pct": 92.0, "grade": "A+"}, {"name": "Mila Mohammed Abudh Mohammed Hamza", "pct": 92.19, "grade": "A+"}, {"name": "Asma Mansur Phiros Mansur", "pct": 96.0, "grade": "A+"}, {"name": "Asiya Mansur Phiros Mansur", "pct": 95.25, "grade": "A+"}]}, {"label": "Grade 6B (Girls)", "label_ar": "الصف 6B - بنات", "grade_num": 6, "n": 13, "avg": 93.3, "max_pct": 99.4, "min_pct": 86.3, "pass_rate": 100.0, "mastery_rate": 100.0, "aplus_rate": 69.2, "dist": {"A+": 9, "A": 4, "B+": 0, "B": 0, "C+": 0, "C": 0, "D": 0}, "subj_avgs": {"ENGLISH": 89.4, "MATHS": 90.8, "SCIENCE": 92.6, "H/U/A/B": 91.3, "I/T/M": 95.0, "SAC": 96.5, "S.ST": 95.8, "COMPUTER": 95.3}, "subjects": ["ENGLISH", "MATHS", "SCIENCE", "H/U/A/B", "I/T/M", "SAC", "S.ST", "COMPUTER"], "struggling": [], "top": [{"name": "Betelihem Mulu Ablel Haile", "pct": 94.81}, {"name": "Tala-Al-Yahyawi", "pct": 99.38}, {"name": "Joodin Mater Mohammed Sawadi", "pct": 96.94}, {"name": "Donia Alaaeldein Farrag Abdelmohsen", "pct": 98.69}, {"name": "Rameesha Fayaz", "pct": 90.81}], "students": [{"name": "Anum Khadijah Farhan", "pct": 86.31, "grade": "A"}, {"name": "Insha Fatema Arshad", "pct": 86.31, "grade": "A"}, {"name": "Betelihem Mulu Ablel Haile", "pct": 94.81, "grade": "A+"}, {"name": "Tala-Al-Yahyawi", "pct": 99.38, "grade": "A+"}, {"name": "Toolen Mohammed Yahya Shebali", "pct": 87.62, "grade": "A"}, {"name": "Joodin Mater Mohammed Sawadi", "pct": 96.94, "grade": "A+"}, {"name": "Hamidah Ambursa Muhammad", "pct": 88.94, "grade": "A"}, {"name": "Donia Alaaeldein Farrag Abdelmohsen", "pct": 98.69, "grade": "A+"}, {"name": "Rameesha Fayaz", "pct": 90.81, "grade": "A+"}, {"name": "Mariam Hussein Ahmed", "pct": 90.88, "grade": "A+"}, {"name": "Gofran Saifelden Babiker Abdalla", "pct": 98.19, "grade": "A+"}, {"name": "Leen Abubaida Kamil Yassin", "pct": 98.94, "grade": "A+"}, {"name": "Waniya Azimi", "pct": 95.56, "grade": "A+"}]}, {"label": "Grade 7 (Girls)", "label_ar": "الصف 7 - بنات", "grade_num": 7, "n": 29, "avg": 95.7, "max_pct": 99.3, "min_pct": 86.5, "pass_rate": 100.0, "mastery_rate": 100.0, "aplus_rate": 96.6, "dist": {"A+": 28, "A": 1, "B+": 0, "B": 0, "C+": 0, "C": 0, "D": 0}, "subj_avgs": {"ENGLISH": 97.0, "MATHS": 89.9, "SCIENCE": 94.8, "H/U/A/B": 93.9, "I/T/M": 97.7, "SAC": 97.5, "S.ST": 97.2, "COMPUTER": 97.4}, "subjects": ["ENGLISH", "MATHS", "SCIENCE", "H/U/A/B", "I/T/M", "SAC", "S.ST", "COMPUTER"], "struggling": [], "top": [{"name": "Zahra Yazdani", "pct": 98.88}, {"name": "Fatima Nasar", "pct": 96.12}, {"name": "Leena Haitham Ahmed Elhadi", "pct": 98.22}, {"name": "Fatima Sayed Ahmed", "pct": 97.22}, {"name": "Daania Rahimuddin Choudhury", "pct": 95.81}], "students": [{"name": "Zahra Yazdani", "pct": 98.88, "grade": "A+"}, {"name": "Fatima Nasar", "pct": 96.12, "grade": "A+"}, {"name": "Leena Haitham Ahmed Elhadi", "pct": 98.22, "grade": "A+"}, {"name": "Fatima Sayed Ahmed", "pct": 97.22, "grade": "A+"}, {"name": "Daania Rahimuddin Choudhury", "pct": 95.81, "grade": "A+"}, {"name": "Ayesha Mohammad Arif", "pct": 93.5, "grade": "A+"}, {"name": "Fager Babaiker Shamselala", "pct": 98.0, "grade": "A+"}, {"name": "Allen Hamad Hifth Allah Hakami", "pct": 96.88, "grade": "A+"}, {"name": "Rahaf Isameldin Dafalallah", "pct": 96.5, "grade": "A+"}, {"name": "Fizza Mirza", "pct": 97.78, "grade": "A+"}, {"name": "Umme Aamira Kharoon", "pct": 91.03, "grade": "A+"}, {"name": "Maryam Shahid", "pct": 98.31, "grade": "A+"}, {"name": "Siddhi Dadwal", "pct": 97.06, "grade": "A+"}, {"name": "Alma Ibrahim Mohammed Madkhli", "pct": 94.38, "grade": "A+"}, {"name": "Remas Mohammed Ali Dahok", "pct": 86.5, "grade": "A"}, {"name": "Aljoharh Al Hussain Ahmed Maafa", "pct": 92.69, "grade": "A+"}, {"name": "Alina Nayab", "pct": 92.66, "grade": "A+"}, {"name": "Hareem Mudassir Shah", "pct": 98.94, "grade": "A+"}, {"name": "Hyrin Komban", "pct": 97.97, "grade": "A+"}, {"name": "Maaria Noorain M. Khaja Hasan Mohiuddin", "pct": 97.97, "grade": "A+"}, {"name": "Maliha Mehraj Naik", "pct": 96.81, "grade": "A+"}, {"name": "Mariya Ali Syed Kashif", "pct": 91.75, "grade": "A+"}, {"name": "Nabeeha Fahad Ahmad", "pct": 91.91, "grade": "A+"}, {"name": "Qamar Kamal Mohammed Aqel", "pct": 96.69, "grade": "A+"}, {"name": "Taani Somani", "pct": 99.31, "grade": "A+"}, {"name": "Aafiya Tabassum", "pct": 96.56, "grade": "A+"}, {"name": "Aiza Shahina", "pct": 95.47, "grade": "A+"}, {"name": "Guwan Rudwan Altyib", "pct": 94.12, "grade": "A+"}, {"name": "Maryam Ahmad", "pct": 95.56, "grade": "A+"}]}, {"label": "Grade 8 (Girls)", "label_ar": "الصف 8 - بنات", "grade_num": 8, "n": 20, "avg": 96.1, "max_pct": 100.0, "min_pct": 83.8, "pass_rate": 100.0, "mastery_rate": 100.0, "aplus_rate": 95.0, "dist": {"A+": 19, "A": 1, "B+": 0, "B": 0, "C+": 0, "C": 0, "D": 0}, "subj_avgs": {"ENGLISH": 96.0, "MATHS": 90.0, "SCIENCE": 95.9, "H/U/A/B": 98.3, "I/T/M": 98.4, "SAC": 98.6, "S.ST": 95.0, "COMPUTER": 96.8}, "subjects": ["ENGLISH", "MATHS", "SCIENCE", "H/U/A/B", "I/T/M", "SAC", "S.ST", "COMPUTER"], "struggling": [], "top": [{"name": "Mehnoor Muhammed Riaz Khan", "pct": 98.75}, {"name": "Talia Mutaz", "pct": 98.56}, {"name": "Ashmiya Amra", "pct": 98.94}, {"name": "Hazla Dil Ruba", "pct": 95.31}, {"name": "Syeda Mariya Fatima", "pct": 99.44}], "students": [{"name": "Mehnoor Muhammed Riaz Khan", "pct": 98.75, "grade": "A+"}, {"name": "Talia Mutaz", "pct": 98.56, "grade": "A+"}, {"name": "Ashmiya Amra", "pct": 98.94, "grade": "A+"}, {"name": "Hazla Dil Ruba", "pct": 95.31, "grade": "A+"}, {"name": "Syeda Mariya Fatima", "pct": 99.44, "grade": "A+"}, {"name": "Sama Abdulrahim Yunis Abduolrahim", "pct": 99.81, "grade": "A+"}, {"name": "Sibgha Fatima", "pct": 97.38, "grade": "A+"}, {"name": "Loreen Khalid Jebril Shrwani", "pct": 99.5, "grade": "A+"}, {"name": "Nadin Ramy Mohamed", "pct": 97.38, "grade": "A+"}, {"name": "Dan Anas Nageeb Mohammed", "pct": 94.44, "grade": "A+"}, {"name": "Julinaar Waleed Ibrahim Gadri", "pct": 98.44, "grade": "A+"}, {"name": "Nataleen Ibrahim Rajees", "pct": 91.06, "grade": "A+"}, {"name": "Reeman Othman Ibrahim Mohammed Jaber", "pct": 91.62, "grade": "A+"}, {"name": "Lodan Nasir", "pct": 92.25, "grade": "A+"}, {"name": "Haneen Yousef Nagy", "pct": 95.62, "grade": "A+"}, {"name": "Asma Abdul Wahid", "pct": 97.88, "grade": "A+"}, {"name": "Khadeeja Thaha", "pct": 100.0, "grade": "A+"}, {"name": "Ajwan Mousa Y Aljabbari", "pct": 83.75, "grade": "A"}, {"name": "Engy Ahmed Ibrahim Hussein", "pct": 95.75, "grade": "A+"}, {"name": "Reitaj Mahmoud Saad", "pct": 96.69, "grade": "A+"}]}, {"label": "Grade 9 (Girls)", "label_ar": "الصف 9 - بنات", "grade_num": 9, "n": 6, "avg": 97.9, "max_pct": 99.4, "min_pct": 93.5, "pass_rate": 100.0, "mastery_rate": 100.0, "aplus_rate": 100.0, "dist": {"A+": 6, "A": 0, "B+": 0, "B": 0, "C+": 0, "C": 0, "D": 0}, "subj_avgs": {"ENGLISH": 95.8, "MATHS": 92.4, "SCIENCE": 99.2, "H/U/A/B": 99.2, "I/T/M": 99.8, "SAC": 100.0, "S.ST": 98.5, "COMPUTER": 98.5}, "subjects": ["ENGLISH", "MATHS", "SCIENCE", "H/U/A/B", "I/T/M", "SAC", "S.ST", "COMPUTER"], "struggling": [], "top": [{"name": "Shams Kamal Mohammed Aqeei", "pct": 98.0}, {"name": "Doha Mohamed Alfadil Alradi", "pct": 99.06}, {"name": "Reem Haitham Ahmed Elhadi", "pct": 99.06}, {"name": "Rahaf Alamin Tagaelsir Faqir", "pct": 98.44}, {"name": "Raghad Elshafei Ali Mohamed", "pct": 99.44}], "students": [{"name": "Shams Kamal Mohammed Aqeei", "pct": 98.0, "grade": "A+"}, {"name": "Doha Mohamed Alfadil Alradi", "pct": 99.06, "grade": "A+"}, {"name": "Reem Haitham Ahmed Elhadi", "pct": 99.06, "grade": "A+"}, {"name": "Rahaf Alamin Tagaelsir Faqir", "pct": 98.44, "grade": "A+"}, {"name": "Raghad Elshafei Ali Mohamed", "pct": 99.44, "grade": "A+"}, {"name": "Gannat Rudwan Altyib Hamadalnil", "pct": 93.5, "grade": "A+"}]}];
+
+// ── HELPERS ──
+const gradeColors = {'A+':'#10b981','A':'#22c55e','B+':'#84cc16','B':'#eab308','C+':'#f97316','C':'#ef4444','D':'#dc2626'};
+const gradeNames = {'A+':'ممتاز','A':'جيد جداً','B+':'جيد','B':'مقبول','C+':'متوسط','C':'مرضي','D':'ضعيف'};
+const subjectNamesAr = {'ENGLISH':'ENGLISH الإنجليزية','MATHS':'MATHS الرياضيات','SCIENCE':'SCIENCE العلوم','H/U/A/B':'H/U/A/B اللغات متعددة','I/T/M':'I/T/M الثقافة الدينية والأخلاق','COMPUTER':'COMPUTER الحاسب','SOCIAL':'SOCIAL الاجتماعيات','SAC':'SAC الاجتماعيات','S.ST':'S.ST اجتماعيات المنهج السعودي'};
+const classColors = ['#3b82f6','#8b5cf6','#06b6d4','#10b981','#f59e0b','#ef4444','#ec4899','#84cc16','#f97316','#6366f1','#14b8a6','#a855f7','#0ea5e9','#22c55e','#fb923c','#e11d48','#7c3aed','#059669'];
+
+let activeSection = 'overview';
+let selectedClassForSubj = 0;
+let selectedSubject = 'ENGLISH';
+let gradeFilter = 'all';
+let subjClassChartInst = null, subjCompareChartInst = null;
+
+const charts = {};
+
+function showSection(id) {
+  document.querySelectorAll('.section').forEach(s=>s.classList.remove('active'));
+  document.querySelectorAll('.nav-tab').forEach(t=>t.classList.remove('active'));
+  document.getElementById('sec-'+id).classList.add('active');
+  event.target.classList.add('active');
+  activeSection = id;
+  if(id==='comparison') buildComparison();
+  if(id==='subjects') buildSubjects();
+}
+
+// ── INIT ──
+function init() {
+  const totalStudents = RAW_DATA.reduce((a,b)=>a+b.n,0);
+  document.getElementById('badge-classes').textContent = `🏫 ${RAW_DATA.length} فصلاً`;
+  document.getElementById('badge-students').textContent = `👥 ${totalStudents} طالباً وطالبة`;
+  buildKPIs(totalStudents);
+  buildOverviewCharts();
+  buildClassGrid();
+  buildSummaryTable();
+  buildSubjClassFilters();
+  buildStudentSelect();
+  renderStudentsTable();
+  buildGradeFilters();
+}
+
+function buildKPIs(total) {
+  const avgAll = (RAW_DATA.reduce((a,b)=>a+b.avg*b.n,0)/total).toFixed(1);
+  const passAll = (RAW_DATA.reduce((a,b)=>a+(b.pass_rate*b.n),0)/total).toFixed(1);
+  const masterAll = (RAW_DATA.reduce((a,b)=>a+(b.mastery_rate*b.n),0)/total).toFixed(1);
+  const aplusAll = (RAW_DATA.reduce((a,b)=>a+(b.aplus_rate*b.n),0)/total).toFixed(1);
+  const bestClass = RAW_DATA.reduce((a,b)=>b.avg>a.avg?b:a);
+  
+  const kpis = [
+    {icon:'👥',val:total,lbl:'إجمالي الطلاب',sub:`${RAW_DATA.length} فصل دراسي`,cls:'blue'},
+    {icon:'📊',val:avgAll+'%',lbl:'متوسط الدرجات الكلي',sub:'عبر جميع الفصول',cls:'purple'},
+    {icon:'✅',val:passAll+'%',lbl:'نسبة النجاح',sub:'درجة ≥ 60%',cls:'green'},
+    {icon:'🏆',val:masterAll+'%',lbl:'نسبة الإتقان',sub:'درجة ≥ 80%',cls:'yellow'},
+    {icon:'⭐',val:aplusAll+'%',lbl:'نسبة الممتازين',sub:'درجة ≥ 90%',cls:'pink'},
+    {icon:'🥇',val:bestClass.label.split(' ')[0]+' '+bestClass.label.split(' ')[1],lbl:'أفضل فصل',sub:`متوسط ${bestClass.avg}%`,cls:'blue'},
+  ];
+  
+  const g = document.getElementById('kpi-grid');
+  g.innerHTML = kpis.map((k,i)=>`
+    <div class="kpi-card ${k.cls}" style="animation-delay:${i*0.1}s">
+      <div class="kpi-icon">${k.icon}</div>
+      <div class="kpi-value count-anim">${k.val}</div>
+      <div class="kpi-label">${k.lbl}</div>
+      <div class="kpi-sub">${k.sub}</div>
+    </div>
+  `).join('');
+}
+
+function buildOverviewCharts() {
+  const labels = RAW_DATA.map(d=>d.label.replace('(Girls)','♀').replace('(Boys)','♂'));
+  const avgs = RAW_DATA.map(d=>d.avg);
+  const masteries = RAW_DATA.map(d=>d.mastery_rate);
+
+  // Avg Chart
+  new Chart(document.getElementById('chart-avg'), {
+    type:'bar',
+    data:{
+      labels,
+      datasets:[{
+        label:'المتوسط %',
+        data:avgs,
+        backgroundColor: avgs.map(v=>v>=95?'rgba(16,185,129,0.8)':v>=90?'rgba(34,197,94,0.7)':'rgba(59,130,246,0.7)'),
+        borderColor: avgs.map(v=>v>=95?'#10b981':v>=90?'#22c55e':'#3b82f6'),
+        borderWidth:2, borderRadius:8, borderSkipped:false,
+      }]
+    },
+    options:{
+      responsive:true, maintainAspectRatio:false,
+      plugins:{legend:{display:false},tooltip:{callbacks:{label:c=>`${c.parsed.y}%`}}},
+      scales:{
+        y:{min:85,max:100,grid:{color:'rgba(255,255,255,0.05)'},ticks:{color:'#94a3b8',callback:v=>v+'%'}},
+        x:{grid:{display:false},ticks:{color:'#94a3b8',maxRotation:45,font:{size:10}}}
+      }
+    }
+  });
+
+  // Mastery Chart
+  new Chart(document.getElementById('chart-mastery'), {
+    type:'bar',
+    data:{
+      labels,
+      datasets:[{
+        label:'نسبة الإتقان %',
+        data:masteries,
+        backgroundColor:'rgba(139,92,246,0.7)',
+        borderColor:'#8b5cf6',
+        borderWidth:2, borderRadius:8, borderSkipped:false,
+      }]
+    },
+    options:{
+      responsive:true, maintainAspectRatio:false,
+      plugins:{legend:{display:false},tooltip:{callbacks:{label:c=>`${c.parsed.y}%`}}},
+      scales:{
+        y:{min:0,max:105,grid:{color:'rgba(255,255,255,0.05)'},ticks:{color:'#94a3b8',callback:v=>v+'%'}},
+        x:{grid:{display:false},ticks:{color:'#94a3b8',maxRotation:45,font:{size:10}}}
+      }
+    }
+  });
+
+  // Total Distribution Donut
+  const totalDist = {'A+':0,'A':0,'B+':0,'B':0,'C+':0,'C':0,'D':0};
+  RAW_DATA.forEach(d=>Object.keys(totalDist).forEach(k=>totalDist[k]+=d.dist[k]||0));
+  new Chart(document.getElementById('chart-dist-total'), {
+    type:'doughnut',
+    data:{
+      labels: Object.keys(totalDist).map(k=>`${k} ${gradeNames[k]}`),
+      datasets:[{
+        data:Object.values(totalDist),
+        backgroundColor:Object.keys(totalDist).map(k=>gradeColors[k]),
+        borderColor:'#1e293b', borderWidth:3, hoverOffset:8,
+      }]
+    },
+    options:{
+      responsive:true,maintainAspectRatio:false,cutout:'65%',
+      plugins:{legend:{position:'bottom',labels:{color:'#94a3b8',padding:12,font:{size:11}}},tooltip:{callbacks:{label:c=>`${c.label}: ${c.raw} طالب`}}}
+    }
+  });
+
+  // Gender Comparison
+  const girls = RAW_DATA.filter(d=>d.label.includes('Girls'));
+  const boys = RAW_DATA.filter(d=>d.label.includes('Boys'));
+  const avgGirls = girls.length? (girls.reduce((a,b)=>a+b.avg*b.n,0)/girls.reduce((a,b)=>a+b.n,0)).toFixed(1):0;
+  const avgBoys = boys.length? (boys.reduce((a,b)=>a+b.avg*b.n,0)/boys.reduce((a,b)=>a+b.n,0)).toFixed(1):0;
+  const masterGirls = girls.length? (girls.reduce((a,b)=>a+b.mastery_rate*b.n,0)/girls.reduce((a,b)=>a+b.n,0)).toFixed(1):0;
+  const masterBoys = boys.length? (boys.reduce((a,b)=>a+b.mastery_rate*b.n,0)/boys.reduce((a,b)=>a+b.n,0)).toFixed(1):0;
+  const aplusGirls = girls.length? (girls.reduce((a,b)=>a+b.aplus_rate*b.n,0)/girls.reduce((a,b)=>a+b.n,0)).toFixed(1):0;
+  const aplusBoys = boys.length? (boys.reduce((a,b)=>a+b.aplus_rate*b.n,0)/boys.reduce((a,b)=>a+b.n,0)).toFixed(1):0;
+  
+  new Chart(document.getElementById('chart-gender'), {
+    type:'radar',
+    data:{
+      labels:['متوسط الدرجة','نسبة الإتقان','نسبة A+'],
+      datasets:[
+        {label:'♀ بنات',data:[avgGirls,masterGirls,aplusGirls],backgroundColor:'rgba(236,72,153,0.2)',borderColor:'#ec4899',pointBackgroundColor:'#ec4899',borderWidth:2},
+        {label:'♂ بنين',data:[avgBoys,masterBoys,aplusBoys],backgroundColor:'rgba(59,130,246,0.2)',borderColor:'#3b82f6',pointBackgroundColor:'#3b82f6',borderWidth:2},
+      ]
+    },
+    options:{
+      responsive:true,maintainAspectRatio:false,
+      scales:{r:{grid:{color:'rgba(255,255,255,0.1)'},pointLabels:{color:'#94a3b8'},ticks:{color:'#94a3b8',backdropColor:'transparent',stepSize:20},min:80,max:100}},
+      plugins:{legend:{labels:{color:'#94a3b8'}}}
+    }
+  });
+}
+
+function buildGradeFilters() {
+  const grades = [...new Set(RAW_DATA.map(d=>d.grade_num))].sort();
+  const fil = document.getElementById('grade-filters');
+  fil.innerHTML = `<button class="nav-tab active" onclick="filterGrade('all',this)">الكل</button>` +
+    grades.map(g=>`<button class="nav-tab" onclick="filterGrade(${g},this)">الصف ${g}</button>`).join('');
+}
+
+function filterGrade(g, btn) {
+  document.querySelectorAll('#grade-filters .nav-tab').forEach(b=>b.classList.remove('active'));
+  btn.classList.add('active');
+  gradeFilter = g;
+  buildClassGrid();
+}
+
+function buildClassGrid() {
+  const filtered = gradeFilter==='all'? RAW_DATA : RAW_DATA.filter(d=>d.grade_num===gradeFilter);
+  const g = document.getElementById('class-grid');
+  g.innerHTML = filtered.map((d,i)=>{
+    const gradeKeys = ['A+','A','B+','B','C+','C','D'];
+    const dots = gradeKeys.map(k=>{
+      const cnt = d.dist[k]||0;
+      return cnt>0?`<span class="dot" style="background:${gradeColors[k]}" title="${k}: ${cnt}"></span>`.repeat(Math.min(cnt,5)):''
+    }).join('');
+    return `
+    <div class="class-card" onclick="openClassModal(${RAW_DATA.indexOf(d)})">
+      <div class="class-card-header">
+        <div>
+          <div class="class-name">${d.label_ar}</div>
+          <div style="font-size:11px;color:var(--text2);margin-top:3px">${d.n} طالب/طالبة</div>
+        </div>
+        <div class="class-avg-badge">${d.avg}%</div>
+      </div>
+      <div class="class-stats">
+        <div class="cs-item">
+          <div class="cs-val" style="color:#22c55e">${d.pass_rate}%</div>
+          <div class="cs-lbl">نسبة النجاح</div>
+        </div>
+        <div class="cs-item">
+          <div class="cs-val" style="color:#8b5cf6">${d.mastery_rate}%</div>
+          <div class="cs-lbl">نسبة الإتقان</div>
+        </div>
+        <div class="cs-item">
+          <div class="cs-val" style="color:#10b981">${d.aplus_rate}%</div>
+          <div class="cs-lbl">نسبة A+</div>
+        </div>
+        <div class="cs-item">
+          <div class="cs-val" style="color:#ef4444">${d.struggling.length}</div>
+          <div class="cs-lbl">متعثرون</div>
+        </div>
+      </div>
+      <div class="mini-bar"><div class="mini-bar-fill" style="width:${d.avg}%"></div></div>
+      <div class="grade-dots" style="margin-top:10px">${dots}</div>
+    </div>`;
+  }).join('');
+}
+
+function openClassModal(idx) {
+  const d = RAW_DATA[idx];
+  document.getElementById('modal-title').textContent = d.label_ar;
+  document.getElementById('modal-subtitle').textContent = `${d.n} طالب/طالبة | متوسط: ${d.avg}% | أعلى: ${d.max_pct}% | أدنى: ${d.min_pct}%`;
+  
+  const gradeKeys = ['A+','A','B+','B','C+','C','D'];
+  const distHTML = gradeKeys.map(k=>{
+    const cnt = d.dist[k]||0, pct = d.n? (cnt/d.n*100).toFixed(1):0;
+    return `<div class="progress-item">
+      <div class="progress-label">
+        <span style="color:${gradeColors[k]};font-weight:700">${k} — ${gradeNames[k]}</span>
+        <span>${cnt} طالب (${pct}%)</span>
+      </div>
+      <div class="progress-bar">
+        <div class="progress-fill" style="width:${pct}%;background:${gradeColors[k]}"></div>
+      </div>
+    </div>`;
+  }).join('');
+
+  const subjHTML = d.subjects.map(s=>{
+    const avg=d.subj_avgs[s]||0;
+    const color=avg>=85?'#10b981':avg>=75?'#22c55e':avg>=65?'#f59e0b':'#ef4444';
+    return `<div class="subj-card">
+      <div class="subj-name">${subjectNamesAr[s]||s}</div>
+      <div class="subj-score" style="color:${color}">${avg}</div>
+      <div class="subj-bar"><div class="subj-bar-fill" style="width:${avg}%;background:${color}"></div></div>
+    </div>`;
+  }).join('');
+
+  const topHTML = d.top.slice(0,5).map((s,i)=>`
+    <div class="rank-item">
+      <div class="rank-num ${i===0?'rank-1':i===1?'rank-2':i===2?'rank-3':'rank-other'}">${i+1}</div>
+      <div class="rank-name">${s.name}</div>
+      <div class="rank-score">${s.pct}%</div>
+    </div>`).join('');
+
+  let struggleHTML = '';
+  if(d.struggling.length>0) {
+    struggleHTML = `
+    <div style="margin-top:20px">
+      <h4 style="color:#ef4444;margin-bottom:12px">⚠️ الطلاب المتعثرون (${d.struggling.length} طالب)</h4>
+      ${d.struggling.map(s=>`<div class="rank-item"><span style="flex:1">${s.name}</span><span class="grade-pill grade-${s.grade.replace('+','plus')}">${s.grade}</span><span style="color:#ef4444;font-weight:700">${s.pct}%</span></div>`).join('')}
+    </div>`;
+  }
+
+  document.getElementById('modal-body').innerHTML = `
+    <div class="kpi-grid" style="grid-template-columns:repeat(4,1fr);margin-bottom:20px">
+      <div class="kpi-card green" style="padding:14px"><div class="kpi-value" style="font-size:22px">${d.pass_rate}%</div><div class="kpi-label">نسبة النجاح</div></div>
+      <div class="kpi-card purple" style="padding:14px"><div class="kpi-value" style="font-size:22px">${d.mastery_rate}%</div><div class="kpi-label">نسبة الإتقان</div></div>
+      <div class="kpi-card yellow" style="padding:14px"><div class="kpi-value" style="font-size:22px">${d.aplus_rate}%</div><div class="kpi-label">نسبة A+</div></div>
+      <div class="kpi-card blue" style="padding:14px"><div class="kpi-value" style="font-size:22px">${d.min_pct}%</div><div class="kpi-label">أدنى درجة</div></div>
+    </div>
+    <div class="grid-2">
+      <div>
+        <h4 style="margin-bottom:14px;font-size:14px;color:var(--text2)">📊 توزيع المستويات</h4>
+        ${distHTML}
+      </div>
+      <div>
+        <h4 style="margin-bottom:14px;font-size:14px;color:var(--text2)">🏆 أعلى 5 طلاب</h4>
+        ${topHTML}
+      </div>
+    </div>
+    <div style="margin-top:20px">
+      <h4 style="margin-bottom:14px;font-size:14px;color:var(--text2)">📚 متوسط المواد</h4>
+      <div class="subj-grid">${subjHTML}</div>
+    </div>
+    ${struggleHTML}
+  `;
+  
+  document.getElementById('modal-overlay').classList.add('open');
+  setTimeout(()=>{
+    document.querySelectorAll('#modal-body .progress-fill').forEach(el=>{
+      const w = el.style.width; el.style.width='0'; setTimeout(()=>el.style.width=w,50);
+    });
+    document.querySelectorAll('#modal-body .subj-bar-fill').forEach(el=>{
+      const w = el.style.width; el.style.width='0'; setTimeout(()=>el.style.width=w,100);
+    });
+  },50);
+}
+
+function closeModal(e) {
+  if(!e || e.target===document.getElementById('modal-overlay')) {
+    document.getElementById('modal-overlay').classList.remove('open');
+  }
+}
+
+function buildComparison() {
+  const sorted = [...RAW_DATA].sort((a,b)=>b.avg-a.avg);
+  const maxAvg = sorted[0].avg;
+  
+  const bars = document.getElementById('comparison-bars');
+  bars.innerHTML = sorted.map((d,i)=>{
+    const pct = (d.avg/maxAvg*100).toFixed(1);
+    const color = i===0?'linear-gradient(90deg,#10b981,#34d399)':i<3?'linear-gradient(90deg,#3b82f6,#06b6d4)':'linear-gradient(90deg,#6366f1,#8b5cf6)';
+    return `<div class="comparison-bar-row">
+      <div class="comparison-bar-label">${d.label_ar}</div>
+      <div class="comparison-bar-track">
+        <div class="comparison-bar-fill" style="width:0%;background:${color};min-width:60px" data-target="${pct}">
+          ${d.avg}%
+        </div>
+      </div>
+    </div>`;
+  }).join('');
+  
+  setTimeout(()=>{
+    document.querySelectorAll('.comparison-bar-fill').forEach(el=>{
+      el.style.width=el.dataset.target+'%';
+    });
+  },100);
+
+  // Radar (top 6 classes)
+  const top6 = sorted.slice(0,6);
+  if(charts.radar) charts.radar.destroy();
+  charts.radar = new Chart(document.getElementById('chart-radar'), {
+    type:'bar',
+    data:{
+      labels: top6.map(d=>d.label_ar),
+      datasets:[
+        {label:'المتوسط %',data:top6.map(d=>d.avg),backgroundColor:'rgba(59,130,246,0.7)',borderColor:'#3b82f6',borderRadius:4,borderWidth:2},
+        {label:'الإتقان %',data:top6.map(d=>d.mastery_rate),backgroundColor:'rgba(139,92,246,0.7)',borderColor:'#8b5cf6',borderRadius:4,borderWidth:2},
+        {label:'A+ %',data:top6.map(d=>d.aplus_rate),backgroundColor:'rgba(16,185,129,0.7)',borderColor:'#10b981',borderRadius:4,borderWidth:2},
+      ]
+    },
+    options:{
+      responsive:true,maintainAspectRatio:false,
+      plugins:{legend:{labels:{color:'#94a3b8'}}},
+      scales:{
+        y:{grid:{color:'rgba(255,255,255,0.05)'},ticks:{color:'#94a3b8',callback:v=>v+'%'},min:0,max:105},
+        x:{grid:{display:false},ticks:{color:'#94a3b8',maxRotation:45,font:{size:10}}}
+      }
+    }
+  });
+}
+
+function buildSummaryTable() {
+  const sorted = [...RAW_DATA].sort((a,b)=>b.avg-a.avg);
+  document.getElementById('summary-tbody').innerHTML = sorted.map((d,i)=>{
+    const medal = i===0?'🥇':i===1?'🥈':i===2?'🥉':'';
+    return `<tr>
+      <td style="text-align:right">${medal} ${d.label_ar}</td>
+      <td>${d.n}</td>
+      <td><span style="font-weight:700;color:${d.avg>=95?'#10b981':d.avg>=90?'#22c55e':'#3b82f6'}">${d.avg}%</span></td>
+      <td><span class="grade-pill grade-Aplus">${d.pass_rate}%</span></td>
+      <td><span style="color:#8b5cf6;font-weight:700">${d.mastery_rate}%</span></td>
+      <td><span style="color:#10b981;font-weight:700">${(d.dist['A+']||0)}</span></td>
+    </tr>`;
+  }).join('');
+}
+
+function buildSubjClassFilters() {
+  const el = document.getElementById('subj-class-filters');
+  el.innerHTML = RAW_DATA.map((d,i)=>
+    `<button class="nav-tab ${i===0?'active':''}" onclick="selectSubjClass(${i},this)">${d.label_ar}</button>`
+  ).join('');
+  buildSubjects();
+}
+
+function selectSubjClass(i, btn) {
+  document.querySelectorAll('#subj-class-filters .nav-tab').forEach(b=>b.classList.remove('active'));
+  btn.classList.add('active');
+  selectedClassForSubj = i;
+  buildSubjectChart();
+}
+
+function buildSubjects() {
+  buildSubjectChart();
+  buildSubjSelectBtns();
+  buildSubjCompareChart();
+}
+
+function buildSubjectChart() {
+  const d = RAW_DATA[selectedClassForSubj];
+  const labels = d.subjects.map(s=>subjectNamesAr[s]||s);
+  const values = d.subjects.map(s=>d.subj_avgs[s]||0);
+  const colors = values.map(v=>v>=85?'rgba(16,185,129,0.8)':v>=75?'rgba(34,197,94,0.8)':v>=65?'rgba(234,179,8,0.8)':'rgba(239,68,68,0.8)');
+  
+  if(subjClassChartInst) subjClassChartInst.destroy();
+  subjClassChartInst = new Chart(document.getElementById('chart-subjects'), {
+    type:'bar',
+    data:{
+      labels,
+      datasets:[{label:'المتوسط /100',data:values,backgroundColor:colors,borderColor:colors.map(c=>c.replace('0.8','1')),borderWidth:2,borderRadius:8,borderSkipped:false}]
+    },
+    options:{
+      responsive:true,maintainAspectRatio:false, indexAxis:'y',
+      plugins:{legend:{display:false},tooltip:{callbacks:{label:c=>`${c.parsed.x.toFixed(1)}/100`}}},
+      scales:{
+        x:{min:60,max:100,grid:{color:'rgba(255,255,255,0.05)'},ticks:{color:'#94a3b8'}},
+        y:{grid:{display:false},ticks:{color:'#94a3b8'}}
+      }
+    }
+  });
+}
+
+function buildSubjSelectBtns() {
+  const allSubjs = [...new Set(RAW_DATA.flatMap(d=>d.subjects))];
+  const el = document.getElementById('subj-select-btns');
+  el.innerHTML = allSubjs.map(s=>`
+    <button class="nav-tab ${s===selectedSubject?'active':''}" onclick="selectSubject('${s}',this)">${subjectNamesAr[s]||s}</button>
+  `).join('');
+}
+
+function selectSubject(s, btn) {
+  document.querySelectorAll('#subj-select-btns .nav-tab').forEach(b=>b.classList.remove('active'));
+  btn.classList.add('active');
+  selectedSubject = s;
+  buildSubjCompareChart();
+}
+
+function buildSubjCompareChart() {
+  const relevant = RAW_DATA.filter(d=>d.subjects.includes(selectedSubject));
+  const labels = relevant.map(d=>d.label_ar);
+  const values = relevant.map(d=>d.subj_avgs[selectedSubject]||0);
+  const colors = values.map((v,i)=>classColors[i%classColors.length]);
+  
+  if(subjCompareChartInst) subjCompareChartInst.destroy();
+  subjCompareChartInst = new Chart(document.getElementById('chart-subj-compare'), {
+    type:'bar',
+    data:{
+      labels,
+      datasets:[{
+        label:subjectNamesAr[selectedSubject]||selectedSubject,
+        data:values,
+        backgroundColor:colors.map(c=>c+'bb'),
+        borderColor:colors,
+        borderWidth:2,borderRadius:6,borderSkipped:false
+      }]
+    },
+    options:{
+      responsive:true,maintainAspectRatio:false,
+      plugins:{legend:{display:false}},
+      scales:{
+        y:{min:70,max:100,grid:{color:'rgba(255,255,255,0.05)'},ticks:{color:'#94a3b8',callback:v=>v+'%'}},
+        x:{grid:{display:false},ticks:{color:'#94a3b8',maxRotation:45,font:{size:9}}}
+      }
+    }
+  });
+}
+
+function buildStudentSelect() {
+  const sel = document.getElementById('student-class-select');
+  sel.innerHTML = '<option value="-1">جميع الفصول</option>' +
+    RAW_DATA.map((d,i)=>`<option value="${i}">${d.label_ar} (${d.n} طالب)</option>`).join('');
+}
+
+function renderStudentsTable() {
+  const classIdx = parseInt(document.getElementById('student-class-select').value);
+  const search = document.getElementById('student-search').value.trim().toLowerCase();
+  const gradeF = document.getElementById('grade-filter-select').value;
+  
+  let students = [];
+  if(classIdx===-1) {
+    RAW_DATA.forEach(d=>d.students.forEach(s=>students.push({...s, cls:d.label_ar})));
+  } else {
+    students = RAW_DATA[classIdx].students.map(s=>{return{...s,cls:RAW_DATA[classIdx].label_ar}});
+  }
+  
+  if(search) students = students.filter(s=>s.name.toLowerCase().includes(search));
+  if(gradeF) students = students.filter(s=>s.grade===gradeF);
+  students.sort((a,b)=>b.pct-a.pct);
+  
+  const gradeClass = g => 'grade-'+g.replace('+','plus');
+  document.getElementById('students-tbody').innerHTML = students.map((s,i)=>{
+    const bar = `<div style="width:100%;height:4px;background:#334155;border-radius:2px;overflow:hidden"><div style="width:${s.pct}%;height:100%;background:${gradeColors[s.grade]};border-radius:2px"></div></div>`;
+    return `<tr>
+      <td>${i+1}</td>
+      <td style="text-align:right">${s.name}${classIdx===-1?`<br><span style="font-size:10px;color:var(--text2)">${s.cls}</span>`:''}</td>
+      <td><div style="font-weight:700">${s.pct}%</div>${bar}</td>
+      <td><span class="grade-pill ${gradeClass(s.grade)}">${s.grade}</span></td>
+      <td>${gradeNames[s.grade]}</td>
+    </tr>`;
+  }).join('');
+  document.getElementById('student-count-label').textContent = `عرض ${students.length} طالب/طالبة`;
+}
+
+// ── CHART.JS DEFAULTS ──
+Chart.defaults.color = '#94a3b8';
+Chart.defaults.font.family = "'Segoe UI',Tahoma,Arial,sans-serif";
+
+init();
+</script>
+</body></html>
